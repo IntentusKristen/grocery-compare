@@ -1,0 +1,70 @@
+.items-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .deal-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .deal-item img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .deal-item h3 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .deal-item p {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .view-deals-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-deals-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .cta-section {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .cta-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .cta-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .App-footer {
+    background-color: #282c34;
+    color: white;
+    padding: 10px;
+    margin-top: 40px;
+  }
+  
