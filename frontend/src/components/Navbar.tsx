@@ -11,9 +11,17 @@ const Navbar: React.FC = () => {
                 <ul className="nav-link">
                     <li>
                         <RouterLink to="/">Home</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink to="/login">Login</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink to="/data">Data</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink to="/settings">Settings</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink to="/shoppinglist">Grocery List</RouterLink>
                     </li>
                 </ul>
