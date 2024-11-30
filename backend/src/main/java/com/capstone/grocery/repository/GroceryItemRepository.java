@@ -12,6 +12,6 @@ import java.util.List;
 public interface GroceryItemRepository extends JpaRepository<GroceryItem, Long> {
     List<GroceryItem> findAllById(List<Long> ids);
 
-    @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) = LOWER(:name)")
+    @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
     List<GroceryItem> findAllByNameCaseInsensitive(@Param("name") String name);
 }
