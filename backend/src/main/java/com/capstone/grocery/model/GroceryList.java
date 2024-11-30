@@ -10,7 +10,7 @@ public class GroceryList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "grocery_list_id")
-    private Long id;
+    private Integer id;
     private String name;
 
     @ManyToOne

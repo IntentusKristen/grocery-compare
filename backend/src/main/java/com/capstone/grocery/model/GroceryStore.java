@@ -10,7 +10,7 @@ public class GroceryStore {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "store_id")
-    private Long id;
+    private Integer id;
     private String name;
     private String address;
 }
