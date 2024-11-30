@@ -1,0 +1,48 @@
+.navbar {
+  background-color: #282c34; /* Dark background color */
+  color: white; /* White text */
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  border-bottom: 3px solid #50c878; /* Emerald green bottom border */
+  position: fixed; /* Fix the navbar at the top */
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  text-align: center; /* Ensure text within navbar is centered */
+}
+
+.navbar nav ul {
+  list-style: none; /* Remove default list styles */
+  display: flex; /* Flexbox to align items */
+  justify-content: center; /* Center the list items horizontally */
+  align-items: center; /* Align the list items vertically */
+  gap: 2rem; /* Space between the links */
+  padding: 0;
+  margin: 0 17rem;
+  width: 100%; /* Ensure the navbar spans the full width */
+}
+
+.navbar nav ul li {
+  display: inline-block; /* Ensure list items align horizontally */
+  text-align: center; /* Center the text within each list item */
+}
+
+.navbar nav ul li a {
+  text-decoration: none; /* Remove underline */
+  color: white; /* White text */
+  font-size: 1.2rem; /* Increase font size */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.navbar nav ul li a:hover {
+  color: #50c878; /* Emerald green on hover */
+}
+
+/* Add spacing below the navbar to prevent overlap */
+.body-content,
+.items-container,
+.deals-section {
+  padding-top: calc(1rem + 3rem); /* Adjust this value dynamically to match the navbar's height */
+}

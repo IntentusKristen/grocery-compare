@@ -2,7 +2,7 @@ import { Link as RouterLink } from "react-router-dom";
 import '../style/Navbar.css';
 // import {Link} from "react-scroll";
 // import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar: React.FC = () => {
     return (
