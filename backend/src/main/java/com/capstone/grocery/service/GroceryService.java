@@ -38,6 +38,10 @@ public class GroceryService {
         return groceryItemRepository.findAllById(ids);
     }
 
+    public List<GroceryItem> findAllGroceryItemsByName(String name) {
+        return groceryItemRepository.findAllByNameCaseInsensitive(name);
+    }
+
     // Grocery List
     public GroceryList createGroceryList(GroceryList groceryList) {
         return groceryListRepository.save(groceryList);

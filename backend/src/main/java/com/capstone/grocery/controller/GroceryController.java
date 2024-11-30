@@ -4,7 +4,6 @@ import com.capstone.grocery.model.GroceryItem;
 import com.capstone.grocery.model.GroceryList;
 import com.capstone.grocery.model.GroceryListItem;
 import com.capstone.grocery.model.User;
-import com.capstone.grocery.repository.GroceryItemRepository;
 import com.capstone.grocery.service.GroceryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +31,13 @@ public class GroceryController {
     }
 
     @GetMapping("/grocery-item/{id}")
-    GroceryItem getGroceryItem(@PathVariable Long id) {
+    GroceryItem getGroceryItemById(@PathVariable Long id) {
         return groceryService.findGroceryItemById(id);
+    }
+
+    @GetMapping("/grocery-items/{name}")
+    List<GroceryItem> getGroceryItemByName(@PathVariable String name) {
+        return groceryService.findAllGroceryItemsByName(name);
     }
 
     @PostMapping("/grocery-list")
