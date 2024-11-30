@@ -13,6 +13,6 @@ public interface GroceryItemRepository extends JpaRepository<GroceryItem, Long> 
     List<GroceryItem> findAllById(Iterable<Long> ids);
 
 
-    //@Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
+    @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
     List<GroceryItem> findAllByNameIgnoreCase(@Param("name") String name);
 }

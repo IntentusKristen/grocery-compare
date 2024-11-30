@@ -10,7 +10,7 @@ public class GroceryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "item_id")
-    private Long id;
+    private Integer id;
     private String name;
     private Double price;
 
