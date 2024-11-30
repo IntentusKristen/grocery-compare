@@ -12,12 +12,22 @@ import java.util.List;
 @Service
 public class GroceryService {
 
+    private final GroceryItemRepository groceryItemRepository;
+    private final GroceryStoreRepository groceryStoreRepository;
+    private final GroceryListRepository groceryListRepository;
+    private final UserRepository userRepository;
+    private final GroceryListItemRepository groceryListItemRepository;
+
     @Autowired
-    private GroceryItemRepository groceryItemRepository;
-    private GroceryStoreRepository groceryStoreRepository;
-    private GroceryListRepository groceryListRepository;
-    private UserRepository userRepository;
-    private GroceryListItemRepository groceryListItemRepository;
+    public GroceryService(GroceryItemRepository groceryItemRepository, GroceryStoreRepository groceryStoreRepository,
+                          GroceryListRepository groceryListRepository, UserRepository userRepository,
+                          GroceryListItemRepository groceryListItemRepository) {
+        this.groceryItemRepository = groceryItemRepository;
+        this.groceryStoreRepository = groceryStoreRepository;
+        this.groceryListRepository = groceryListRepository;
+        this.userRepository = userRepository;
+        this.groceryListItemRepository = groceryListItemRepository;
+    }
 
     @PostConstruct
     public void testConnection() {
