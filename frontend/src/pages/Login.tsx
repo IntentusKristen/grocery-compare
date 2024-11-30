@@ -1,19 +1,53 @@
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import '../style/Login.css';
 
-type Login = {
+const Login: React.FC = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' });
 
-};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-const Login: React.FC<Login> = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('Login attempt:', formData);
+    // Add your login logic here
+  };
+
   return (
     <>
       <Navbar />
-      <div className="weekly-deal">
-        <h2>{"Login Page"}</h2>
-        <form className="login-form">
-          <input type="text" placeholder="Username" />
-          <input type="password" placeholder="Password" />
+      <div className="login-container">
+        <h2>Login</h2>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
           <button type="submit">Login</button>
         </form>
       </div>

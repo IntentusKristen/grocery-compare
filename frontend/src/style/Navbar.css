@@ -1,15 +1,20 @@
 .navbar {
-  background-color: #282c34; /* Dark background color */
-  color: white; /* White text */
-  padding: 1rem 0; /* Padding for navbar height */
+  background-color: #282c34;
+  color: white;
+  padding: 1rem 0;
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
-  border-bottom: 3px solid #50c878; /* Emerald green bottom border */
-  position: relative; /* Change this from fixed to relative */
-  top: 0; /* This is now relative to its normal flow */
-  width: 100%; /* Full width of the parent container */
-  z-index: 1000; /* Keeps it above other content */
+  justify-content: center; /* Center navbar content horizontally */
+  align-items: center; /* Center navbar content vertically */
+  border-bottom: 3px solid #50c878;
+  position: relative;
+  width: 100%;
+}
+
+nav {
+  width: 100%; /* Ensure the nav takes full width of the navbar */
+  display: flex;
+  justify-content: center; /* Center nav content horizontally */
+  align-items: center; /* Center nav content vertically */
 }
 
 .navbar nav ul {
@@ -19,29 +24,20 @@
   align-items: center; /* Align the links vertically */
   gap: 2rem; /* Space between links */
   padding: 0; /* Remove extra padding */
-  margin: 0 17rem; /* Adjust this value for desired placement */
-  width: 100%; /* Full width of the navbar */
+  margin: 0; /* Remove any default margin */
 }
 
 .navbar nav ul li {
-  display: inline-block; /* Align links horizontally */
-  text-align: center; /* Center the text */
+  margin: 0; /* Remove any default margin between list items */
 }
 
 .navbar nav ul li a {
-  text-decoration: none; /* Remove underline */
-  color: white; /* White text */
-  font-size: 1.2rem; /* Increase font size */
-  transition: color 0.3s ease; /* Smooth hover transition */
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
 }
 
 .navbar nav ul li a:hover {
-  color: #50c878; /* Emerald green on hover */
-}
-
-/* Adjust padding for content to align with navbar height */
-.body-content,
-.items-container,
-.deals-section {
-  padding-top: 0; /* No extra padding needed since the navbar scrolls with the page */
+  color: #50c878;
 }
