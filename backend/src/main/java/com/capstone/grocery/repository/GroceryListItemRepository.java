@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GroceryListItemRepository extends JpaRepository<GroceryListItem, Long> {
-    List<GroceryListItem> findByGroceryListId(Long groceryListId);
+public interface GroceryListItemRepository extends JpaRepository<GroceryListItem, Integer> {
+    List<GroceryListItem> findByGroceryListId(Integer groceryListId);
 }

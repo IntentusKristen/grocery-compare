@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GroceryItemRepository extends JpaRepository<GroceryItem, Long> {
-    List<GroceryItem> findAllById(Iterable<Long> ids);
+public interface GroceryItemRepository extends JpaRepository<GroceryItem, Integer> {
+    List<GroceryItem> findAllById(Iterable<Integer> ids);
 
 
     @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")

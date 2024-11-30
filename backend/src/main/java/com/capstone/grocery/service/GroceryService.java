@@ -30,11 +30,11 @@ public class GroceryService {
         return groceryItemRepository.save(groceryItem);
     }
 
-    public GroceryItem findGroceryItemById(Long id) {
+    public GroceryItem findGroceryItemById(Integer id) {
         return groceryItemRepository.findById(id).orElse(null);
     }
 
-    public List<GroceryItem> findGroceryItemsByIds(List<Long> ids) {
+    public List<GroceryItem> findGroceryItemsByIds(List<Integer> ids) {
         return groceryItemRepository.findAllById(ids);
     }
 
@@ -47,7 +47,7 @@ public class GroceryService {
         return groceryListRepository.save(groceryList);
     }
 
-    public GroceryList findGroceryListById(Long id) {
+    public GroceryList findGroceryListById(Integer id) {
         return groceryListRepository.findById(id).orElse(null);
     }
 
@@ -56,12 +56,12 @@ public class GroceryService {
         return groceryListItemRepository.save(groceryListItem);
     }
 
-    public List<GroceryListItem> findGroceryListItemsByListId(Long groceryListId) {
+    public List<GroceryListItem> findGroceryListItemsByListId(Integer groceryListId) {
         return groceryListItemRepository.findByGroceryListId(groceryListId);
     }
 
-    public List<Long> getItemIdsFromGroceryListItems(List<GroceryListItem> groceryListItems) {
-        List<Long> itemIds = new ArrayList<>();
+    public List<Integer> getItemIdsFromGroceryListItems(List<GroceryListItem> groceryListItems) {
+        List<Integer> itemIds = new ArrayList<>();
         for (GroceryListItem item : groceryListItems) {
             itemIds.add(item.getId());
         }
@@ -73,7 +73,7 @@ public class GroceryService {
         return groceryStoreRepository.save(groceryStore);
     }
 
-    public GroceryStore findGroceryStoreById(Long id) {
+    public GroceryStore findGroceryStoreById(Integer id) {
         return groceryStoreRepository.findById(id).orElse(null);
     }
 
@@ -82,7 +82,7 @@ public class GroceryService {
         return userRepository.save(user);
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
 

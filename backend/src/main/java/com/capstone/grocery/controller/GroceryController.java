@@ -14,14 +14,14 @@ public class GroceryController {
 
     // get all the items in a list using the list id
     @GetMapping("/grocery-items-in-list/{groceryListId}")
-    List<GroceryItem> getGroceryItemsInList(@PathVariable Long groceryListId) {
+    List<GroceryItem> getGroceryItemsInList(@PathVariable Integer groceryListId) {
         List<GroceryListItem> groceryListItems = groceryService.findGroceryListItemsByListId(groceryListId);
-        List<Long> groceryItemsIds = groceryService.getItemIdsFromGroceryListItems(groceryListItems);
+        List<Integer> groceryItemsIds = groceryService.getItemIdsFromGroceryListItems(groceryListItems);
         return groceryService.findGroceryItemsByIds(groceryItemsIds);
     }
 
     @GetMapping("/grocery-list/{id}")
-    GroceryList getGroceryList(@PathVariable Long id) {
+    GroceryList getGroceryList(@PathVariable Integer id) {
         return groceryService.findGroceryListById(id);
     }
 
@@ -36,7 +36,7 @@ public class GroceryController {
     }
 
     @GetMapping("/grocery-item/{id}")
-    GroceryItem getGroceryItemById(@PathVariable Long id) {
+    GroceryItem getGroceryItemById(@PathVariable Integer id) {
         return groceryService.findGroceryItemById(id);
     }
 
@@ -51,7 +51,7 @@ public class GroceryController {
     }
 
     @GetMapping("/grocery-list/{id}")
-    GroceryList getGroceryListById(@PathVariable Long id) {
+    GroceryList getGroceryListById(@PathVariable Integer id) {
         return groceryService.findGroceryListById(id);
     }
 
@@ -61,7 +61,7 @@ public class GroceryController {
     }
 
     @GetMapping("/users/{id}")
-    User getUserById(@PathVariable Long id) {
+    User getUserById(@PathVariable Integer id) {
         return groceryService.getUserById(id);
     }
 
