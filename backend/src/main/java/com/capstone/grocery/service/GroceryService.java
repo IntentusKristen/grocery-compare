@@ -51,7 +51,7 @@ public class GroceryService {
         return groceryListRepository.findById(id).orElse(null);
     }
 
-    public GroceryList findGroceryListByUserId(Integer userId) {
+    public GroceryList findGroceryListByUserId(User userId) {
         return groceryListRepository.findByUserId(userId);
     }
 
