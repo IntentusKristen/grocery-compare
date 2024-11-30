@@ -12,6 +12,9 @@ const ShoppingList: React.FC<ShoppingList> = () => {
       <div className="weekly-deal">
         <h2>{"Shopping List Page"}</h2>
       </div>
+      <div className="create-button-container">
+        <button className="create-btn">+Create</button>
+      </div>
     </>
   );
 };

@@ -1,0 +1,22 @@
+.create-button-container {
+    position: fixed; /* Fixed position to anchor it */
+    bottom: 20px; /* Distance from the bottom of the page */
+    right: 20px; /* Distance from the left side of the page */
+    z-index: 1000; /* Ensure it stays above other elements */
+  }
+  
+  .create-btn {
+    background-color: #50c878; /* Emerald green */
+    color: white; /* White text for contrast */
+    padding: 10px 20px; /* Button size */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for aesthetics */
+    font-size: 16px; /* Text size */
+    cursor: pointer; /* Pointer cursor for better UX */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .create-btn:hover {
+    background-color: #45a049; /* Slightly darker emerald green on hover */
+  }
+  

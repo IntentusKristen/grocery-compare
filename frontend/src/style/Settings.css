@@ -1,0 +1,21 @@
+.settings-header {
+    display: flex;
+    justify-content: center; /* Horizontally center the header */
+    align-items: center; /* Vertically align the icon and text */
+    margin-top: 20px; /* Add some spacing above the header */
+  }
+  
+  .settings-header h2 {
+    color: #50c878; /* Emerald green text */
+    font-size: 30px; /* Adjust the font size for better visibility */
+    display: flex; /* To align the icon next to the text */
+    align-items: center; /* Vertically align the icon with the text */
+    gap: 10px; /* Add spacing between the text and the icon */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .gear-icon {
+    width: 24px; /* Set the gear icon size */
+    height: 24px;
+  }
+  

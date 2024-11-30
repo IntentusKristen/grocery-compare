@@ -9,11 +9,15 @@ const Settings: React.FC<Settings> = () => {
   return (
     <>
       <Navbar />
-      <div className="weekly-deal">
-        <h2>{"Settings Page"}</h2>
+      <div className="settings-header">
+        <h2>{"Settings"}<img 
+          src="https://via.placeholder.com/24" /* Replace with the URL or local path to your gear icon */
+          alt="Gear Icon" 
+          className="gear-icon" 
+        /></h2>
       </div>
     </>
   );
 };
 
-export default Settings;
+export default Settings; 
