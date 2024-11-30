@@ -1,8 +1,11 @@
+import { jwtDecode } from 'jwt-decode';
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import '../style/Login.css';
 
 const Login: React.FC = () => {
+  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
+  const [tokenExp, setTokenExp] = useState(() => token ? jwtDecode(token).exp : null)
   const [formData, setFormData] = useState({ username: '', password: '' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

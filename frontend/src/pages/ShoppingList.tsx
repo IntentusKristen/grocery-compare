@@ -5,7 +5,7 @@ type ShoppingList = {
 
 };
 
-const ShoppingList: React.FC<ShoppingList> = () => {
+const ShoppingList: React.FC = () => {
   return (
     <>
       <Navbar/>
