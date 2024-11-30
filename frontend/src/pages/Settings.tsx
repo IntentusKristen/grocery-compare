@@ -1,33 +1,19 @@
+import Navbar from '../components/Navbar';
 import '../style/Settings.css';
 
-type Item = {
-    id: number;
-    name: string;
-    price: string;
-    image: string;
-  };
-  
-  type Settings = {
-    storeName: string;
-    items: Item[];
-  };
-  
-  const Settings: React.FC<Settings> = ({ storeName, items }) => {
-    return (
+type Settings = {
+
+};
+
+const Settings: React.FC<Settings> = () => {
+  return (
+    <>
+      <Navbar />
       <div className="weekly-deal">
-        <h2>{storeName}</h2>
-        <div className="items-container">
-          {items.map((item) => (
-            <div key={item.id} className="deal-item">
-              <img src={item.image} alt={item.name} />
-              <h4>{item.name}</h4>
-              <p>{item.price}</p>
-            </div>
-          ))}
-        </div>
+        <h2>{"Settings Page"}</h2>
       </div>
-    );
-  };
-  
-  export default Settings;
-  
+    </>
+  );
+};
+
+export default Settings;
