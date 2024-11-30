@@ -51,6 +51,10 @@ public class GroceryService {
         return groceryListRepository.findById(id).orElse(null);
     }
 
+    public GroceryList findGroceryListByUserId(Integer userId) {
+        return groceryListRepository.findByUserId(userId);
+    }
+
     // Grocery List Items
     public GroceryListItem createGroceryListItem(GroceryListItem groceryListItem) {
         return groceryListItemRepository.save(groceryListItem);
