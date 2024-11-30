@@ -15,13 +15,5 @@ public class GroceryController {
         this.groceryRepository = groceryRepository;
     }
 
-    @PostMapping("/grocery-item")
-    GroceryItem createGroceryItem(@RequestBody GroceryItem groceryItem) {
-        return groceryRepository.save(groceryItem);
-    }
 
-    @GetMapping
-    GroceryItem getGroceryItemById(@RequestParam Long id) {
-        return groceryRepository.findById(id).orElse(null);
-    }
 }
