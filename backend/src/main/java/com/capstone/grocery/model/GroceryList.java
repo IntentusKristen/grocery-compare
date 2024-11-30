@@ -5,16 +5,15 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "grocery_items")
-public class GroceryItem {
+@Table(name = "grocery_lists")
+public class GroceryList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "item_id")
+    @Column(name = "grocery_list_id")
     private Long id;
     private String name;
-    private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "store_id")
-    private GroceryStore groceryStore;
+    @JoinColumn(name = "user_id")
+    private User userId;
 }
