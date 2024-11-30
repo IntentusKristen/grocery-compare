@@ -1,30 +1,19 @@
+import { Link as RouterLink } from "react-router-dom";
 import '../style/Navbar.css';
+// import {Link} from "react-scroll";
+// import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
 
-type Item = {
-    id: number;
-    name: string;
-    price: string;
-    image: string;
-  };
   
-  type Navbar = {
-    storeName: string;
-    items: Item[];
-  };
-  
-  const Navbar: React.FC<Navbar> = ({ storeName, items }) => {
+  const Navbar: React.FC = () => {
     return (
-      <div className="weekly-deal">
-        <h2>{storeName}</h2>
-        <div className="items-container">
-          {items.map((item) => (
-            <div key={item.id} className="deal-item">
-              <img src={item.image} alt={item.name} />
-              <h4>{item.name}</h4>
-              <p>{item.price}</p>
-            </div>
-          ))}
-        </div>
+      <div className="navbar">
+        <nav>
+            <ul className="nav-link">
+                <li>
+                    <RouterLink to="/login">Login</RouterLink>
+                </li>
+            </ul>
+        </nav>
       </div>
     );
   };
