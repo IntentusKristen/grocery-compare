@@ -25,10 +25,10 @@ public class GroceryController {
         return groceryService.findGroceryListById(id);
     }
 
-//    @GetMapping("/grocery-list/{user_id}")
-//    GroceryList getGroceryListByUserId(@PathVariable Long user_id) {
-//        return;
-//    }
+    @GetMapping("/grocery-list/{user_id}")
+    GroceryList getGroceryListByUserId(@PathVariable Integer user_id) {
+        return groceryService.findGroceryListByUserId(user_id);
+    }
 
     @PostMapping("/grocery-item")
     GroceryItem createGroceryItem(@RequestBody GroceryItem groceryItem) {
