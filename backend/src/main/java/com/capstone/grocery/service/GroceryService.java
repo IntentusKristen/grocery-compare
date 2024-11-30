@@ -39,7 +39,7 @@ public class GroceryService {
     }
 
     public List<GroceryItem> findAllGroceryItemsByName(String name) {
-        return groceryItemRepository.findAllByNameCaseInsensitive(name);
+        return groceryItemRepository.findAllByNameIgnoreCase(name);
     }
 
     // Grocery List

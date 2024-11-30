@@ -10,8 +10,9 @@ import java.util.List;
 
 @Repository
 public interface GroceryItemRepository extends JpaRepository<GroceryItem, Long> {
-    List<GroceryItem> findAllById(List<Long> ids);
+    List<GroceryItem> findAllById(Iterable<Long> ids);
 
-    @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
-    List<GroceryItem> findAllByNameCaseInsensitive(@Param("name") String name);
+
+    //@Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
+    List<GroceryItem> findAllByNameIgnoreCase(@Param("name") String name);
 }
