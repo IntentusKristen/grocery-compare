@@ -21,7 +21,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost.com:8080/get-all-grocery-items');
+        const response = await fetch('http://localhost.com:8080/all-grocery-items');
         if (!response.ok) {
           throw new Error('Failed to fetch grocery items.');
         }
