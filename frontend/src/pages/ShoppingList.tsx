@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import '../style/ShoppingList.css';
+import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import "../style/ShoppingList.css";
 
 type GroceryItem = {
   id: number;
@@ -10,26 +10,28 @@ type GroceryItem = {
 type ShoppingListProps = {};
 
 const ShoppingList: React.FC<ShoppingListProps> = () => {
-  const [allItems, setAllItems] = useState<GroceryItem[]>([]); 
-  const [groceryList, setGroceryList] = useState<{ id: number; name: string; quantity: number }[]>([]);
-  const [listName, setListName] = useState<string>('');
+  const [allItems, setAllItems] = useState<GroceryItem[]>([]);
+  const [groceryList, setGroceryList] = useState<
+    { id: number; name: string; quantity: number }[]
+  >([]);
+  const [listName, setListName] = useState<string>("");
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
-  const userId = 1; 
+  const userId = 1;
 
   // Fetch all grocery items on component mount
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost.com:8080/all-grocery-items');
+        const response = await fetch("http://localhost:8080/all-grocery-items");
         if (!response.ok) {
-          throw new Error('Failed to fetch grocery items.');
+          throw new Error("Failed to fetch grocery items.");
         }
         const items: GroceryItem[] = await response.json();
         setAllItems(items);
       } catch (error) {
-        console.error('Error fetching items:', error);
-        alert('Could not fetch items. Please try again later.');
+        console.error("Error fetching items:", error);
+        alert("Could not fetch items. Please try again later.");
       }
     };
     fetchItems();
@@ -52,7 +54,10 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
     if (selectedItemId && quantity > 0) {
       const selectedItem = allItems.find((item) => item.id === selectedItemId);
       if (selectedItem) {
-        setGroceryList([...groceryList, { id: selectedItem.id, name: selectedItem.name, quantity }]);
+        setGroceryList([
+          ...groceryList,
+          { id: selectedItem.id, name: selectedItem.name, quantity },
+        ]);
         setSelectedItemId(null);
         setQuantity(1);
       }
@@ -66,26 +71,29 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
 
   const handleSaveList = async () => {
     if (groceryList.length === 0) {
-      alert('Your shopping list is empty!');
+      alert("Your shopping list is empty!");
       return;
     }
-    if (listName.trim() === '') {
-      alert('Please provide a name for your shopping list.');
+    if (listName.trim() === "") {
+      alert("Please provide a name for your shopping list.");
       return;
     }
 
     try {
       // Save grocery list
-      const groceryListResponse = await fetch('http://localhost.com:8080/grocery-list', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: listName, user_id: userId }),
-      });
+      const groceryListResponse = await fetch(
+        "http://localhost.com:8080/grocery-list",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: listName, user_id: userId }),
+        }
+      );
 
       if (!groceryListResponse.ok) {
-        alert('Failed to save the grocery list. Please try again.');
+        alert("Failed to save the grocery list. Please try again.");
         return;
       }
 
@@ -98,23 +106,26 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         quantity: item.quantity,
       }));
 
-      const groceryItemsResponse = await fetch('http://localhost.com:8080/grocery-list-items', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(groceryListItems),
-      });
+      const groceryItemsResponse = await fetch(
+        "http://localhost.com:8080/grocery-list-items",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(groceryListItems),
+        }
+      );
 
       if (!groceryItemsResponse.ok) {
-        alert('Failed to save grocery list items. Please try again.');
+        alert("Failed to save grocery list items. Please try again.");
         return;
       }
 
-      alert('Shopping list saved successfully!');
+      alert("Shopping list saved successfully!");
     } catch (error) {
-      console.error('Error saving the list:', error);
-      alert('An error occurred while saving the list.');
+      console.error("Error saving the list:", error);
+      alert("An error occurred while saving the list.");
     }
   };
 
@@ -135,7 +146,11 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         </div>
 
         <form onSubmit={handleAddItem} className="grocery-form">
-          <select onChange={handleItemSelection} value={selectedItemId || ''} required>
+          <select
+            onChange={handleItemSelection}
+            value={selectedItemId || ""}
+            required
+          >
             <option value="" disabled>
               Select an item
             </option>
@@ -161,7 +176,10 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
             {groceryList.map((item, index) => (
               <li key={index} className="grocery-item">
                 {item.name} (x{item.quantity})
-                <button onClick={() => handleRemoveItem(index)} className="remove-btn">
+                <button
+                  onClick={() => handleRemoveItem(index)}
+                  className="remove-btn"
+                >
                   Remove
                 </button>
               </li>
