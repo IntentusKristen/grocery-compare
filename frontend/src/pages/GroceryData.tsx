@@ -56,10 +56,11 @@ const GroceryData: React.FC = () => {
   return (
     <>
       <Navbar />
-
+      
       <div className="grocery-form">
-        <h3>Add a Grocery Item</h3>
+      
         <form onSubmit={handleSubmit}>
+          <h3>Add a Grocery Item</h3>
           <div className="form-group">
             <label htmlFor="name">Item Name</label>
             <input
