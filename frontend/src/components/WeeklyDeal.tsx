@@ -1,19 +1,20 @@
 import '../style/WeeklyDeal.css';
 
 type Item = {
-    id: number;
-    name: string;
-    price: string;
-    image: string;
-  };
-  
-  type WeeklyDealProps = {
-    storeName: string;
-    items: Item[];
-  };
-  
-  const WeeklyDeal: React.FC<WeeklyDealProps> = ({ storeName, items }) => {
-    return (
+  id: number;
+  name: string;
+  price: string;
+  image: string;
+};
+
+type WeeklyDealProps = {
+  storeName: string;
+  items: Item[];
+};
+
+const WeeklyDeal: React.FC<WeeklyDealProps> = ({ storeName, items }) => {
+  return (
+    <>
       <div className="weekly-deal">
         <h2>{storeName}</h2>
         <div className="items-container">
@@ -26,8 +27,8 @@ type Item = {
           ))}
         </div>
       </div>
-    );
-  };
-  
-  export default WeeklyDeal;
-  
+    </>
+  );
+};
+
+export default WeeklyDeal;

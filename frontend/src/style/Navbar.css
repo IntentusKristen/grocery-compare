@@ -1,0 +1,43 @@
+.navbar {
+  background-color: #282c34;
+  color: white;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center; /* Center navbar content horizontally */
+  align-items: center; /* Center navbar content vertically */
+  border-bottom: 3px solid #50c878;
+  position: relative;
+  width: 100%;
+}
+
+nav {
+  width: 100%; /* Ensure the nav takes full width of the navbar */
+  display: flex;
+  justify-content: center; /* Center nav content horizontally */
+  align-items: center; /* Center nav content vertically */
+}
+
+.navbar nav ul {
+  list-style: none; /* Remove default list styles */
+  display: flex; /* Flexbox for horizontal alignment */
+  justify-content: center; /* Center the links horizontally */
+  align-items: center; /* Align the links vertically */
+  gap: 2rem; /* Space between links */
+  padding: 0; /* Remove extra padding */
+  margin: 0; /* Remove any default margin */
+}
+
+.navbar nav ul li {
+  margin: 0; /* Remove any default margin between list items */
+}
+
+.navbar nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+  color: #50c878;
+}
