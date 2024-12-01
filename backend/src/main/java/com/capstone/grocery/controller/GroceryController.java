@@ -73,6 +73,11 @@ public class GroceryController {
         return groceryService.createGroceryList(groceryList);
     }
 
+    @PostMapping("/grocery-list-item")
+    public GroceryListItem createGroceryListItem(@RequestBody GroceryListItem groceryListItem) {
+        return groceryService.createGroceryListItem(groceryListItem);
+    }
+
 //    @GetMapping("/grocery-list/{id}")
 //    public GroceryList getGroceryListById(@PathVariable Integer id) {
 //        return groceryService.findGroceryListById(id);
