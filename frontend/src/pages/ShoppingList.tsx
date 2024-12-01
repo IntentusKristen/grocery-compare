@@ -73,8 +73,7 @@ const ShoppingList: React.FC<ShoppingList> = () => {
       <div className="grocery-list-container">
         <h2>Shopping List</h2>
 
-        <div className="list-name-container">
-          <label htmlFor="list-name">List Name</label>
+        <div>
           <input
             type="text"
             id="list-name"
@@ -83,9 +82,7 @@ const ShoppingList: React.FC<ShoppingList> = () => {
             placeholder="Enter a name for your list"
             required
           />
-        </div>
-
-        <div>
+        
         <form onSubmit={handleAddItem} className="grocery-form">
           <input
             type="text"
@@ -104,6 +101,8 @@ const ShoppingList: React.FC<ShoppingList> = () => {
           />
           <button type="submit">Add Item</button>
         </form>
+
+   
         </div>
 
         {groceryList.length > 0 && (
