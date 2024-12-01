@@ -157,9 +157,6 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
           <button type="submit">Add Item</button>
         </form>
 
-   
-        </div>
-
         {groceryList.length > 0 && (
           <ul className="grocery-list">
             {groceryList.map((item, index) => (
