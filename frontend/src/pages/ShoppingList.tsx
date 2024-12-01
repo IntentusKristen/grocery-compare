@@ -125,6 +125,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         <h2>Shopping List</h2>
 
         <div>
+        <div>
           <input
             type="text"
             value={listName}
@@ -155,6 +156,9 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
           />
           <button type="submit">Add Item</button>
         </form>
+
+   
+        </div>
 
         {groceryList.length > 0 && (
           <ul className="grocery-list">
