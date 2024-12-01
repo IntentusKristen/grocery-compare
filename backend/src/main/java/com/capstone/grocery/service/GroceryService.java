@@ -52,6 +52,10 @@ public class GroceryService {
         return groceryItemRepository.findAllByNameIgnoreCase(name);
     }
 
+    public List<GroceryItem> findAllGroceryItems(){
+        return groceryItemRepository.findAll();
+    }
+
     // Grocery List
     public GroceryList createGroceryList(GroceryList groceryList) {
         return groceryListRepository.save(groceryList);
