@@ -1,33 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import '../style/ShoppingList.css';
 
-type ShoppingList = {};
+type GroceryItem = {
+  id: number;
+  name: string;
+};
 
-const ShoppingList: React.FC<ShoppingList> = () => {
-  const [item, setItem] = useState<string>(''); 
-  const [quantity, setQuantity] = useState<number>(1); 
-  const [listName, setListName] = useState<string>(''); 
-  const [groceryList, setGroceryList] = useState<{ name: string; quantity: number }[]>([]); 
+type ShoppingListProps = {};
 
-  const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setItem(e.target.value);
+const ShoppingList: React.FC<ShoppingListProps> = () => {
+  const [allItems, setAllItems] = useState<GroceryItem[]>([]); 
+  const [groceryList, setGroceryList] = useState<{ id: number; name: string; quantity: number }[]>([]);
+  const [listName, setListName] = useState<string>('');
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
+  const userId = 1; 
+
+  // Fetch all grocery items on component mount
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('http://localhost.com:8080/get-all-grocery-items');
+        if (!response.ok) {
+          throw new Error('Failed to fetch grocery items.');
+        }
+        const items: GroceryItem[] = await response.json();
+        setAllItems(items);
+      } catch (error) {
+        console.error('Error fetching items:', error);
+        alert('Could not fetch items. Please try again later.');
+      }
+    };
+    fetchItems();
+  }, []);
+
+  const handleListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setListName(e.target.value);
   };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(e.target.value));
   };
 
-  const handleListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setListName(e.target.value);
+  const handleItemSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedItemId(Number(e.target.value));
   };
 
   const handleAddItem = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent the page from reloading
-    if (item.trim() !== '') {
-      setGroceryList([...groceryList, { name: item, quantity }]);
-      setItem(''); // Reset the input field after adding an item
-      setQuantity(1); // Reset the quantity after adding the item
+    e.preventDefault();
+    if (selectedItemId && quantity > 0) {
+      const selectedItem = allItems.find((item) => item.id === selectedItemId);
+      if (selectedItem) {
+        setGroceryList([...groceryList, { id: selectedItem.id, name: selectedItem.name, quantity }]);
+        setSelectedItemId(null);
+        setQuantity(1);
+      }
     }
   };
 
@@ -36,7 +64,6 @@ const ShoppingList: React.FC<ShoppingList> = () => {
     setGroceryList(updatedList);
   };
 
-  // Function to handle the save action
   const handleSaveList = async () => {
     if (groceryList.length === 0) {
       alert('Your shopping list is empty!');
@@ -48,19 +75,43 @@ const ShoppingList: React.FC<ShoppingList> = () => {
     }
 
     try {
-      const response = await fetch('/api/save-grocery-list', {
+      // Save grocery list
+      const groceryListResponse = await fetch('http://localhost.com:8080/grocery-list', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ listName, groceryList }),
+        body: JSON.stringify({ name: listName, user_id: userId }),
       });
 
-      if (response.ok) {
-        alert('Shopping list saved successfully!');
-      } else {
-        alert('Failed to save the list. Please try again.');
+      if (!groceryListResponse.ok) {
+        alert('Failed to save the grocery list. Please try again.');
+        return;
       }
+
+      const { grocery_list_id } = await groceryListResponse.json();
+
+      // Save grocery list items
+      const groceryListItems = groceryList.map((item) => ({
+        grocery_list_id,
+        item_id: item.id,
+        quantity: item.quantity,
+      }));
+
+      const groceryItemsResponse = await fetch('http://localhost.com:8080/grocery-list-items', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(groceryListItems),
+      });
+
+      if (!groceryItemsResponse.ok) {
+        alert('Failed to save grocery list items. Please try again.');
+        return;
+      }
+
+      alert('Shopping list saved successfully!');
     } catch (error) {
       console.error('Error saving the list:', error);
       alert('An error occurred while saving the list.');
@@ -76,21 +127,24 @@ const ShoppingList: React.FC<ShoppingList> = () => {
         <div>
           <input
             type="text"
-            id="list-name"
             value={listName}
             onChange={handleListNameChange}
             placeholder="Enter a name for your list"
             required
           />
-        
+        </div>
+
         <form onSubmit={handleAddItem} className="grocery-form">
-          <input
-            type="text"
-            value={item}
-            onChange={handleItemChange}
-            placeholder="Enter item name"
-            required
-          />
+          <select onChange={handleItemSelection} value={selectedItemId || ''} required>
+            <option value="" disabled>
+              Select an item
+            </option>
+            {allItems.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
           <input
             type="number"
             value={quantity}
@@ -102,18 +156,12 @@ const ShoppingList: React.FC<ShoppingList> = () => {
           <button type="submit">Add Item</button>
         </form>
 
-   
-        </div>
-
         {groceryList.length > 0 && (
           <ul className="grocery-list">
-            {groceryList.map((groceryItem, index) => (
+            {groceryList.map((item, index) => (
               <li key={index} className="grocery-item">
-                {groceryItem.name} (x{groceryItem.quantity})
-                <button
-                  onClick={() => handleRemoveItem(index)}
-                  className="remove-btn"
-                >
+                {item.name} (x{item.quantity})
+                <button onClick={() => handleRemoveItem(index)} className="remove-btn">
                   Remove
                 </button>
               </li>
