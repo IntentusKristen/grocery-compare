@@ -31,7 +31,7 @@ const GroceryData: React.FC = () => {
     try {
       setStatusMessage('Submitting...');
 
-      const response = await fetch('/api/grocery-item', {
+      const response = await fetch('http://localhost:8080/grocery-item', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,6 @@ const GroceryData: React.FC = () => {
           <button type="submit">Add Item</button>
         </form>
 
-        {/* Display status message */}
         {statusMessage && <p className="status-message">{statusMessage}</p>}
       </div>
     </>
