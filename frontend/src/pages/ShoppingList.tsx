@@ -82,7 +82,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
     try {
       // Save grocery list
       const groceryListResponse = await fetch(
-        "http://localhost.com:8080/grocery-list",
+        "http://localhost:8080/grocery-list",
         {
           method: "POST",
           headers: {
@@ -107,7 +107,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
       }));
 
       const groceryItemsResponse = await fetch(
-        "http://localhost.com:8080/grocery-list-items",
+        "http://localhost:8080/grocery-list-items",
         {
           method: "POST",
           headers: {
