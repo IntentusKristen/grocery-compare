@@ -20,7 +20,7 @@ const Search: React.FC<SearchProp> = () => {
     e.preventDefault();
     console.log('Searching for:', keyword);
     // Add your Search logic here
-    if (filter == "item"){
+    if (filter === "item"){
       const fetchItems = async () => {
         try {
           const response = await fetch(`http://localhost:8080/grocery-items/${keyword}`);
@@ -46,10 +46,10 @@ const Search: React.FC<SearchProp> = () => {
     <>
       <Navbar />
       <div className="search">
-        <h2>{"Search Page"}</h2>
+        <h2>{"Search"}</h2>
         <form className="search-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="keyword">Keyword</label>
+            <label htmlFor="keyword">Keyword:</label>
             <input
               type="text"
               id="keyword"
