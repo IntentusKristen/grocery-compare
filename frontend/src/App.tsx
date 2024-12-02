@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Data from './pages/Data';
+import GroceryData from './pages/GroceryData';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Search from './pages/Search';
 import Settings from './pages/Settings';
 import ShoppingList from './pages/ShoppingList';
-import GroceryData from './pages/GroceryData';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/data" element={<Data />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/shoppinglist" element={<ShoppingList />} />
           <Route path="/grocerydata" element={<GroceryData />} />
         </Routes>

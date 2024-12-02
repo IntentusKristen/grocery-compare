@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
                         <RouterLink to="/login">Login</RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/data">Data</RouterLink>
+                        <RouterLink to="/search">Search</RouterLink>
                     </li>
                     <li>
                         <RouterLink to="/settings">Settings</RouterLink>
