@@ -63,9 +63,19 @@ public class GroceryController {
         return groceryService.findAllGroceryItemsByName(name);
     }
 
+    @GetMapping("/all-grocery-items")
+    public List<GroceryItem> getAllGroceryItems(){
+        return groceryService.findAllGroceryItems();
+    }
+
     @PostMapping("/grocery-list")
     public GroceryList createGroceryList(@RequestBody GroceryList groceryList) {
         return groceryService.createGroceryList(groceryList);
+    }
+
+    @PostMapping("/grocery-list-item")
+    public GroceryListItem createGroceryListItem(@RequestBody GroceryListItem groceryListItem) {
+        return groceryService.createGroceryListItem(groceryListItem);
     }
 
 //    @GetMapping("/grocery-list/{id}")
