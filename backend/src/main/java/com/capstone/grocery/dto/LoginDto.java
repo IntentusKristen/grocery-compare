@@ -3,7 +3,7 @@ package com.capstone.grocery.dto;
 import lombok.Data;
 
 @Data
-public class LoginCredentials {
+public class LoginDto {
     private String email;
-    private String password;
+    private char[] password;
 }
