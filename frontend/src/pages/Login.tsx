@@ -21,7 +21,8 @@ const Login: React.FC = () => {
     e.preventDefault();
     console.log("Login attempt:", formData);
 
-    fetch("http://localhost:8080/user/login", {
+    const baseUrl = process.env.REACT_APP_BASE_URL;
+    fetch(`${baseUrl}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
