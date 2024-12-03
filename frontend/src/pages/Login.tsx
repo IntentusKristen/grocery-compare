@@ -1,15 +1,10 @@
-import { jwtDecode } from "jwt-decode";
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import "../style/Login.css";
+import { useAuth } from "../hooks/useAuth";
 
 const Login: React.FC = () => {
-  const [token, setToken] = useState(
-    () => localStorage.getItem("token") || null
-  );
-  const [tokenExp, setTokenExp] = useState(() =>
-    token ? jwtDecode(token).exp : null
-  );
+  const { login } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,18 +17,15 @@ const Login: React.FC = () => {
     console.log("Login attempt:", formData);
 
     const baseUrl = process.env.REACT_APP_BASE_URL;
-    fetch(`${baseUrl}/login`, {
+    fetch(`${baseUrl}/authenticate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Login response:", data);
+      .then(async (data) => {
         if (data.token) {
-          localStorage.setItem("token", data.token);
-          setToken(data.token);
-          setTokenExp(jwtDecode(data.token).exp);
+          await login(data.token);
         }
       })
       .catch((error) => console.error("Error:", error));

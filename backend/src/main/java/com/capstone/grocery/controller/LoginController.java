@@ -39,7 +39,7 @@ public class LoginController {
         return groceryService.getUserById(id);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/authenticate")
     public ResponseEntity<UserDto> login(@RequestBody LoginDto loginDto) {
         UserDto user = userService.login(loginDto);
         user.setToken(userAuthProvider.createToken(user.getEmail()));
