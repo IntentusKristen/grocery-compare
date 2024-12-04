@@ -7,19 +7,40 @@ type GroceryItem = {
   name: string;
 };
 
+type GroceryStore = {
+  id: number;
+  name: string;
+}
+
 type ShoppingListProps = {};
 
 const ShoppingList: React.FC<ShoppingListProps> = () => {
   const [allItems, setAllItems] = useState<GroceryItem[]>([]); 
   const [groceryList, setGroceryList] = useState<{ id: number; name: string; quantity: number }[]>([]);
   const [listName, setListName] = useState<string>('');
+  const [allStores, setAllStores] = useState<GroceryStore[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const userId = 1; 
 
   // Fetch all grocery items on component mount
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchStores = async () => {
+      try {
+        const response = await fetch('http://localhost.com:8080/all-stores');
+        if (!response.ok){
+          throw new Error('Failed to fetch grocery items.')
+        }
+        const stores: GroceryStore[] = await response.json();
+        setAllStores(stores);
+      } catch (error){
+        console.error("Error fetching stores", error);
+        alert("Could not get all stores. Please try again later");
+      }
+
+    }
+
+     const fetchItems = async () => {
       try {
         const response = await fetch('http://localhost.com:8080/all-grocery-items');
         if (!response.ok) {
@@ -32,6 +53,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         alert('Could not fetch items. Please try again later.');
       }
     };
+    fetchStores();
     fetchItems();
   }, []);
 
@@ -42,6 +64,10 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(e.target.value));
   };
+
+  const handleStoreSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedStore(e.target.value);
+  }
 
   const handleItemSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedItemId(Number(e.target.value));
@@ -135,6 +161,17 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         </div>
 
         <form onSubmit={handleAddItem} className="grocery-form">
+        <select onChange={handleStoreSelection} value={selectedStore || ''} required>
+            <option value="" disabled>
+              Select a store
+            </option>
+            {allStores.map((store) => (
+              <option key={store.id} value={store.id}>
+                {store.name}
+              </option>
+            ))}
+          </select>
+
           <select onChange={handleItemSelection} value={selectedItemId || ''} required>
             <option value="" disabled>
               Select an item
