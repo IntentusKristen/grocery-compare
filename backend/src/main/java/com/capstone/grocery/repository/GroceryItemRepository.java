@@ -15,4 +15,6 @@ public interface GroceryItemRepository extends JpaRepository<GroceryItem, Intege
 
     @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
     List<GroceryItem> findAllByNameIgnoreCase(@Param("name") String name);
+
+    List<GroceryItem> findAllByStoreId(Integer storeId);
 }

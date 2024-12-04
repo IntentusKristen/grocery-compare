@@ -52,6 +52,10 @@ public class GroceryService {
         return groceryItemRepository.findAllByNameIgnoreCase(name);
     }
 
+    public List<GroceryItem> findAllGroceryItemsByStoreId(Integer storeId) {
+        return groceryItemRepository.findAllByStoreId(storeId);
+    }
+
     public List<GroceryItem> findAllGroceryItems(){
         return groceryItemRepository.findAll();
     }
@@ -95,6 +99,9 @@ public class GroceryService {
         return groceryStoreRepository.findById(id).orElse(null);
     }
 
+    public List<GroceryStore> findAllGroceryStores() {
+        return groceryStoreRepository.findAll();
+    }
     // User
     public User createUser(User user) {
         return userRepository.save(user);

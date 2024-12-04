@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "^7.0.1"
+    "react-router-dom": "^7.0.1",
+    "bootstrap": "^5.3.3"
   }
 }

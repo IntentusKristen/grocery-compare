@@ -1,12 +1,11 @@
-import { jwtDecode } from 'jwt-decode';
-import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import '../style/Login.css';
+import React, { useState } from "react";
+import Navbar from "../components/Navbar";
+import "../style/Login.css";
+import { useAuth } from "../hooks/useAuth";
 
 const Login: React.FC = () => {
-  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
-  const [tokenExp, setTokenExp] = useState(() => token ? jwtDecode(token).exp : null)
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const { login } = useAuth();
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,8 +14,21 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Login attempt:', formData);
-    // Add your login logic here
+    console.log("Login attempt:", formData);
+
+    const baseUrl = process.env.REACT_APP_BASE_URL;
+    fetch(`${baseUrl}/authenticate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then(async (data) => {
+        if (data.token) {
+          await login(data.token);
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
   return (
@@ -26,14 +38,14 @@ const Login: React.FC = () => {
         <h2>Login</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
-              id="username"
-              name="username"
-              value={formData.username}
+              id="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your username"
+              placeholder="Enter your email"
               required
             />
           </div>
