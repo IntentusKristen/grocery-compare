@@ -20,20 +20,33 @@ const Search: React.FC<SearchProp> = () => {
     e.preventDefault();
     console.log('Searching for:', keyword);
     // Add your Search logic here
-    if (filter == "item"){
-      const fetchItems = async () => {
-        try {
+    const fetchItems = async () => {
+      try {
+        //filter by item
+        if (filter == "item") {
           const response = await fetch(`http://localhost:8080/grocery-items/${keyword}`);
+
           if (!response.ok) {
             throw new Error("Failed to fetch grocery items.");
           }
           const items: GroceryItem[] = await response.json();
           setFound(items);
-        } catch (error) {
-          console.error("Error fetching items:", error);
-          alert("Could not fetch items. Please try again later.");
         }
-      };
+        //filter by store
+        else {
+          const response = await fetch(`http://localhost:8080/grocery-items/${keyword}`);
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch grocery items.");
+          }
+          const items: GroceryItem[] = await response.json();
+          setFound(items);
+        }
+      } catch (error) {
+        console.error("Error fetching items:", error);
+        alert("Could not fetch items. Please try again later.");
+      }
+
       fetchItems();
       console.log(found)
     }
@@ -65,6 +78,7 @@ const Search: React.FC<SearchProp> = () => {
             <select id="filter" onChange={handleFilter}>
               <option value="item">Item Name</option>
               <option value="store">Store</option>
+              <option value="test">Test</option>
             </select>
           </div>
           <button type="submit">Search</button>
