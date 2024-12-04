@@ -19,6 +19,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   const [groceryList, setGroceryList] = useState<{ id: number; name: string; quantity: number }[]>([]);
   const [listName, setListName] = useState<string>('');
   const [allStores, setAllStores] = useState<GroceryStore[]>([]);
+  const [selectedStoreId, setStoreId] = useState<number>(0);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const userId = 1; 
@@ -40,9 +41,9 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
 
     }
 
-     const fetchItems = async () => {
+     const fetchItems = async (storeId:number) => {
       try {
-        const response = await fetch('http://localhost.com:8080/all-grocery-items');
+        const response = await fetch(`http://localhost.com:8080/grocery-items/${storeId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch grocery items.');
         }
@@ -54,8 +55,8 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
       }
     };
     fetchStores();
-    fetchItems();
-  }, []);
+    fetchItems(selectedStoreId);
+  }, [allStores]);
 
   const handleListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListName(e.target.value);
@@ -66,7 +67,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   };
 
   const handleStoreSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedStore(e.target.value);
+    setStoreId(e.target.value);
   }
 
   const handleItemSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -161,7 +162,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         </div>
 
         <form onSubmit={handleAddItem} className="grocery-form">
-        <select onChange={handleStoreSelection} value={selectedStore || ''} required>
+        <select onChange={handleStoreSelection} value={selectedStoreId || ''} required>
             <option value="" disabled>
               Select a store
             </option>
