@@ -23,6 +23,9 @@ const Navbar: React.FC = () => {
             <li>
               <RouterLink to="/login">Login</RouterLink>
             </li>
+            <li>
+            <RouterLink to="/register">Register</RouterLink>
+          </li>
           )}
 
           {token && (
@@ -39,15 +42,13 @@ const Navbar: React.FC = () => {
               <li>
                 <RouterLink to="/grocerydata">Grocery Data</RouterLink>
               </li>
-              <li>
-                <RouterLink to="/register">Register</RouterLink>
-              </li>
+              <div className="logout-container">
+            <LogoutButton />
+                </div>
             </>
           )}
         </ul>
-        <div className="logout-container">
-          <LogoutButton />
-        </div>
+        
       </nav>
     </div>
   );
