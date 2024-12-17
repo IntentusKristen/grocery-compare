@@ -48,6 +48,12 @@ public class LoginController {
         return ResponseEntity.created(URI.create("/users/" + user.getId())).body(user);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
+        userAuthProvider.invalidateToken(token);
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
     @ExceptionHandler(InvalidUserException.class)
     public ResponseEntity<String> handleInvalidUserException(InvalidUserException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

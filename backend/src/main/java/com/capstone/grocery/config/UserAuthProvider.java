@@ -54,4 +54,8 @@ public class UserAuthProvider {
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
+
+    public void invalidateToken(String token) {
+
+    }
 }
