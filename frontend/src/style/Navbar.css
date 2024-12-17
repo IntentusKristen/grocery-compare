@@ -42,4 +42,29 @@ nav {
   color: #50c878;
 }
 
+/* Logout button container: position absolutely on the right */
+.logout-container {
+  position: absolute; /* Position the container independently */
+  right: 1rem; /* Push the button to the far right with padding */
+  top: 30%; /* Move the button slightly higher */
+  transform: translateY(-50%); /* Perfect vertical centering */
+  display: flex;
+  align-items: center; /* Align button content */
+}
 
+/* Logout button styling */
+.logout-button {
+  background-color: transparent;
+  color: #50c878; /* Emerald green text */
+  border: 1px solid #50c878; /* Emerald green border */
+  padding: 0.2rem 0.8rem; /* Smaller padding to hug the text, horizontally slightly longer */
+  font-size: 1rem;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #50c878; /* Emerald green background on hover */
+  color: white; /* White text on hover */
+}
