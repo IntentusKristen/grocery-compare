@@ -4,8 +4,13 @@ import '../style/Navbar.css';
 // import {Link} from "react-scroll";
 // import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../style/Navbar.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar: React.FC = () => {
+    const { token } = useAuth(); // Assuming useAuth provides the token
+
     return (
         <div className="navbar">
             <nav>
@@ -13,19 +18,25 @@ const Navbar: React.FC = () => {
                     <li>
                         <RouterLink to="/">Home</RouterLink>
                     </li>
-                    <li>
-                        <RouterLink to="/login">Login</RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink to="/data">Data</RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink to="/settings">Settings</RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink to="/shoppinglist">Grocery List</RouterLink>
-                    </li>
-                    <li>
+
+                    {!token && (
+                        <li>
+                            <RouterLink to="/login">Login</RouterLink>
+                        </li>
+                    )}
+
+                    {token && (
+                        <>
+                            <li>
+                                <RouterLink to="/data">Data</RouterLink>
+                            </li>
+                            <li>
+                                <RouterLink to="/settings">Settings</RouterLink>
+                            </li>
+                            <li>
+                                <RouterLink to="/shoppinglist">Grocery List</RouterLink>
+                            </li>
+                            <li>
                         <RouterLink to="/grocerydata">Grocery Data</RouterLink>
                     </li>
                     <li>

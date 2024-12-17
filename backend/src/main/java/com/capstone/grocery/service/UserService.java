@@ -5,7 +5,9 @@ import com.capstone.grocery.dto.RegisterDto;
 import com.capstone.grocery.dto.UserDto;
 import com.capstone.grocery.exception.AppException;
 import com.capstone.grocery.mapper.UserMapper;
+import com.capstone.grocery.model.BlacklistedToken;
 import com.capstone.grocery.model.User;
+import com.capstone.grocery.repository.BlacklistedTokenRepository;
 import com.capstone.grocery.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +21,14 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BlacklistedTokenRepository blacklistedTokenRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BlacklistedTokenRepository blacklistedTokenRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.blacklistedTokenRepository = blacklistedTokenRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -58,5 +62,13 @@ public class UserService {
 
         userRepository.save(user);
         return userMapper.toUserDto(user);
+    }
+
+    public void blacklistToken(String token) {
+        blacklistedTokenRepository.save(new BlacklistedToken(token));
+    }
+
+    public boolean isBlacklisted(String token) {
+        return blacklistedTokenRepository.findByToken(token).isPresent();
     }
 }
