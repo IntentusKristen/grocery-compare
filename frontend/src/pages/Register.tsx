@@ -44,9 +44,9 @@ const Register: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="login-container">
+      <div className="register-container">
         <h2>Register</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="register-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
             <input
