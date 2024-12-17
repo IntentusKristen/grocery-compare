@@ -70,8 +70,8 @@ public class GroceryService {
     }
 
     // Grocery List Items
-    public GroceryListItem createGroceryListItem(GroceryListItem groceryListItem) {
-        return groceryListItemRepository.save(groceryListItem);
+    public List<GroceryListItem> createGroceryListItem(List<GroceryListItem> groceryListItem) {
+        return groceryListItemRepository.saveAll(groceryListItem);
     }
 
     public List<GroceryListItem> findGroceryListItemsByListId(Integer groceryListId) {
