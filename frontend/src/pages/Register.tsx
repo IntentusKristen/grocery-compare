@@ -5,7 +5,12 @@ import "../style/Register.css";
 
 const Register: React.FC = () => {
   const { login } = useAuth();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -14,10 +19,10 @@ const Register: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Login attempt:", formData);
+    console.log("Registration attempt:", formData);
 
     const baseUrl = process.env.REACT_APP_BASE_URL;
-    fetch(`${baseUrl}/authenticate`, {
+    fetch(`${baseUrl}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -35,8 +40,34 @@ const Register: React.FC = () => {
     <>
       <Navbar />
       <div className="login-container">
-        <h2>Login</h2>
+        <h2>Register</h2>
         <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              placeholder="Enter your first name"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Enter your last name"
+              required
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -63,7 +94,7 @@ const Register: React.FC = () => {
             />
           </div>
 
-          <button type="submit">Login</button>
+          <button type="submit">Register</button>
         </form>
       </div>
     </>
