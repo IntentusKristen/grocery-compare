@@ -31,6 +31,9 @@ const Navbar: React.FC = () => {
                         <RouterLink to="/register">Register</RouterLink>
                     </li>
                 </ul>
+                <div className="logout-container">
+          <button className="logout-button">Logout</button>
+        </div>
             </nav>
         </div>
     );
