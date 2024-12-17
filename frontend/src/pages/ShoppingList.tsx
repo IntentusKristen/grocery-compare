@@ -145,7 +145,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
     <>
       <Navbar />
       <div className="grocery-list-container">
-        <h2>Shopping List</h2>
+        <h2>Grocery List</h2>
 
         <div>
           <input
