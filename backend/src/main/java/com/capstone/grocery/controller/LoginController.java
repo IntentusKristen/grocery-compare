@@ -48,8 +48,9 @@ public class LoginController {
         return ResponseEntity.created(URI.create("/users/" + user.getId())).body(user);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
+    @GetMapping("/signout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String header) {
+        String token = header.split(" ")[1];
         userAuthProvider.invalidateToken(token);
         return ResponseEntity.ok("Logged out successfully");
     }

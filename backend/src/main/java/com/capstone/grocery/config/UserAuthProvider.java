@@ -46,6 +46,9 @@ public class UserAuthProvider {
     }
 
     public Authentication validateToken(String token) {
+        if (userService.isBlacklisted(token))
+            throw new RuntimeException("Invalid token");
+
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
 
         DecodedJWT decoded = verifier.verify(token);
@@ -56,6 +59,6 @@ public class UserAuthProvider {
     }
 
     public void invalidateToken(String token) {
-
+        userService.blacklistToken(token);
     }
 }
