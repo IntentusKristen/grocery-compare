@@ -29,11 +29,6 @@ public class LoginController {
         this.userAuthProvider = userAuthProvider;
     }
 
-    @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        return groceryService.createUser(user);
-    }
-
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable Integer id) {
         return groceryService.getUserById(id);
@@ -51,6 +46,13 @@ public class LoginController {
         UserDto user = userService.register(registerDto);
         user.setToken(userAuthProvider.createToken(user.getEmail()));
         return ResponseEntity.created(URI.create("/users/" + user.getId())).body(user);
+    }
+
+    @GetMapping("/signout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String header) {
+        String token = header.split(" ")[1];
+        userAuthProvider.invalidateToken(token);
+        return ResponseEntity.ok("Logged out successfully");
     }
 
     @ExceptionHandler(InvalidUserException.class)
