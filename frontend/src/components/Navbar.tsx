@@ -20,12 +20,14 @@ const Navbar: React.FC = () => {
           </li>
 
           {!token && (
-            <li>
-              <RouterLink to="/login">Login</RouterLink>
-            </li>
-            <li>
-            <RouterLink to="/register">Register</RouterLink>
-          </li>
+            <>
+              <li>
+                <RouterLink to="/login">Login</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/register">Register</RouterLink>
+              </li>
+            </>
           )}
 
           {token && (
@@ -43,12 +45,11 @@ const Navbar: React.FC = () => {
                 <RouterLink to="/grocerydata">Grocery Data</RouterLink>
               </li>
               <div className="logout-container">
-            <LogoutButton />
-                </div>
+                <LogoutButton />
+              </div>
             </>
           )}
         </ul>
-        
       </nav>
     </div>
   );
