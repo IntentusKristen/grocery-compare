@@ -21,11 +21,13 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const userId = 1;
 
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+
   // Fetch all grocery items on component mount
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const baseUrl = process.env.REACT_APP_BASE_URL;
+
         const response = await fetch(`${baseUrl}/all-grocery-items`, {
           method: "GET",
           headers: {
@@ -90,11 +92,12 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
     try {
       // Save grocery list
       const groceryListResponse = await fetch(
-        "http://localhost:8080/grocery-list",
+        `${baseUrl}/grocery-list`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ name: listName, user_id: userId }),
         }
@@ -115,11 +118,12 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
       }));
 
       const groceryItemsResponse = await fetch(
-        "http://localhost:8080/grocery-list-items",
+        `${baseUrl}/grocery-list-items`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(groceryListItems),
         }
@@ -141,7 +145,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
     <>
       <Navbar />
       <div className="grocery-list-container">
-        <h2>Shopping List</h2>
+        <h2>Grocery List</h2>
 
         <div>
           <input
