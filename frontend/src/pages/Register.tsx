@@ -27,13 +27,18 @@ const Register: React.FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
-      .then(async (data) => {
-        if (data.token) {
-          await login(data.token);
+      .then(async (res) => {
+        if (!res.ok){
+          alert("Email taken. Enter a different email.");
+        }
+        const response = await res.json()
+        if (response.token) {
+          await login(response.token);
         }
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("Error:", error)
+      });
   };
 
   return (
