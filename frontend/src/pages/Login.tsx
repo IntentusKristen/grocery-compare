@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import "../style/Login.css";
 import { useAuth } from "../hooks/useAuth";
+import "../style/Login.css";
 
 const Login: React.FC = () => {
   const { login } = useAuth();
@@ -65,6 +66,7 @@ const Login: React.FC = () => {
 
           <button type="submit">Login</button>
         </form>
+        <button><RouterLink to="/register">Register</RouterLink></button>
       </div>
     </>
   );
