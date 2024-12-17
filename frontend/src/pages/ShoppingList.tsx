@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "../style/ShoppingList.css";
+import { useAuth } from "../hooks/useAuth";
 
 type GroceryItem = {
   id: number;
@@ -10,6 +11,7 @@ type GroceryItem = {
 type ShoppingListProps = {};
 
 const ShoppingList: React.FC<ShoppingListProps> = () => {
+  const { token } = useAuth();
   const [allItems, setAllItems] = useState<GroceryItem[]>([]);
   const [groceryList, setGroceryList] = useState<
     { id: number; name: string; quantity: number }[]
@@ -23,7 +25,13 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:8080/all-grocery-items");
+        const baseUrl = process.env.REACT_APP_BASE_URL;
+        const response = await fetch(`${baseUrl}/all-grocery-items`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch grocery items.");
         }
