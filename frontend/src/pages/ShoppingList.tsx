@@ -27,7 +27,6 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-
         const response = await fetch(`${baseUrl}/all-grocery-items`, {
           method: "GET",
           headers: {
@@ -91,17 +90,14 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
 
     try {
       // Save grocery list
-      const groceryListResponse = await fetch(
-        `${baseUrl}/grocery-list`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ name: listName, user_id: userId }),
-        }
-      );
+      const groceryListResponse = await fetch(`${baseUrl}/grocery-lists`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name: listName, user_id: userId }),
+      });
 
       if (!groceryListResponse.ok) {
         alert("Failed to save the grocery list. Please try again.");

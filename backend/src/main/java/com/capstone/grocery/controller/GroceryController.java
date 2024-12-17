@@ -68,12 +68,12 @@ public class GroceryController {
         return groceryService.findAllGroceryItems();
     }
 
-    @PostMapping("/grocery-list")
+    @PostMapping("/grocery-lists")
     public GroceryList createGroceryList(@RequestBody GroceryList groceryList) {
         return groceryService.createGroceryList(groceryList);
     }
 
-    @PostMapping("/grocery-list-item")
+    @PostMapping("/grocery-list-items")
     public GroceryListItem createGroceryListItem(@RequestBody GroceryListItem groceryListItem) {
         return groceryService.createGroceryListItem(groceryListItem);
     }
