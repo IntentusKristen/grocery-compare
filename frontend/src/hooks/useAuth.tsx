@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 interface AuthContextType {
   token: string | null;
   login: (token: string) => Promise<void>;
-  logout: () => void;
+  logout: (token: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   token: null,
   login: async (token: string) => {},
-  logout: () => {},
+  logout: async (token: string) => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -25,7 +25,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setToken(token);
         navigate("/");
       },
-      logout: () => {
+      logout: async (token: string) => {
+        const baseUrl = process.env.REACT_APP_BASE_URL;
+        const response = await fetch(`${baseUrl}/signout`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to sign out.");
+        }
+
         setToken(null);
         navigate("/", { replace: true });
       },
