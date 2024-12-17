@@ -27,6 +27,9 @@ const Navbar: React.FC = () => {
                     <li>
                         <RouterLink to="/grocerydata">Grocery Data</RouterLink>
                     </li>
+                    <li>
+                        <RouterLink to="/register">Register</RouterLink>
+                    </li>
                 </ul>
             </nav>
         </div>
