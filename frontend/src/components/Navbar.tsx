@@ -1,4 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 import '../style/Navbar.css';
 // import {Link} from "react-scroll";
 // import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
@@ -31,9 +32,7 @@ const Navbar: React.FC = () => {
                         <RouterLink to="/register">Register</RouterLink>
                     </li>
                 </ul>
-                <div className="logout-container">
-          <button className="logout-button">Logout</button>
-        </div>
+              <div className="logout-container"><LogoutButton /></div>
             </nav>
         </div>
     );
