@@ -29,11 +29,6 @@ public class LoginController {
         this.userAuthProvider = userAuthProvider;
     }
 
-    @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        return groceryService.createUser(user);
-    }
-
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable Integer id) {
         return groceryService.getUserById(id);
