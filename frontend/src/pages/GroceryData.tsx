@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import '../style/GroceryData.css';
+import { useAuth } from "../hooks/useAuth";
 
 type GroceryItem = {
   name: string;
@@ -16,6 +17,8 @@ const GroceryData: React.FC = () => {
   });
 
   const [statusMessage, setStatusMessage] = useState<string>('');
+  const { token } = useAuth();
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,10 +34,11 @@ const GroceryData: React.FC = () => {
     try {
       setStatusMessage('Submitting...');
 
-      const response = await fetch('http://localhost:8080/grocery-item', {
+      const response = await fetch(`${baseUrl}/grocery-item`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData), 
       });
