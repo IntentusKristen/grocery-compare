@@ -33,6 +33,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public UserDto findById(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+        return userMapper.toUserDto(user);
+    }
+
     public UserDto findByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
