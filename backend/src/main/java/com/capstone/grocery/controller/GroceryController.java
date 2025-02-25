@@ -3,6 +3,7 @@ package com.capstone.grocery.controller;
 import com.capstone.grocery.model.GroceryItem;
 import com.capstone.grocery.model.GroceryList;
 import com.capstone.grocery.model.GroceryListItem;
+import com.capstone.grocery.model.GroceryStore;
 import com.capstone.grocery.service.GroceryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +77,11 @@ public class GroceryController {
     @PostMapping("/grocery-list-items")
     public List<GroceryListItem> createGroceryListItem(@RequestBody List<GroceryListItem> groceryListItem) {
         return groceryService.createGroceryListItem(groceryListItem);
+    }
+
+    @GetMapping("/grocery-stores")
+    public ResponseEntity<List<GroceryStore>> getAllGroceryStores() {
+        return ResponseEntity.ok(groceryService.findAllGroceryStores());
     }
 
 //    @GetMapping("/grocery-list/{id}")

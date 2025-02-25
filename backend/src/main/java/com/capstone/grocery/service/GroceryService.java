@@ -91,6 +91,10 @@ public class GroceryService {
         return groceryStoreRepository.save(groceryStore);
     }
 
+    public List<GroceryStore> findAllGroceryStores() {
+        return groceryStoreRepository.findAll();
+    }
+
     public GroceryStore findGroceryStoreById(Integer id) {
         return groceryStoreRepository.findById(id).orElse(null);
     }
