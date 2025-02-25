@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "../style/ShoppingList.css";
 import { useAuth } from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
 type GroceryItem = {
   id: number;
@@ -12,6 +13,8 @@ type ShoppingListProps = {};
 
 const ShoppingList: React.FC<ShoppingListProps> = () => {
   const { token } = useAuth();
+  const userId = jwtDecode(token ? token : "").iss;
+
   const [allItems, setAllItems] = useState<GroceryItem[]>([]);
   const [groceryList, setGroceryList] = useState<
     { id: number; name: string; quantity: number }[]
@@ -19,7 +22,6 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   const [listName, setListName] = useState<string>("");
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
-  const userId = 1;
 
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -44,7 +46,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
       }
     };
     fetchItems();
-  }, []);
+  }, [baseUrl, token, userId]);
 
   const handleListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListName(e.target.value);
@@ -96,7 +98,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name: listName, user_id: userId }),
+        body: JSON.stringify({ listName: listName, userId: Number(userId) }),
       });
 
       if (!groceryListResponse.ok) {

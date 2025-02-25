@@ -1,5 +1,6 @@
 package com.capstone.grocery.service;
 
+import com.capstone.grocery.dto.CreateListDto;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.repository.*;
 import jakarta.annotation.PostConstruct;
@@ -57,16 +58,17 @@ public class GroceryService {
     }
 
     // Grocery List
-    public GroceryList createGroceryList(GroceryList groceryList) {
+    public GroceryList createGroceryList(CreateListDto createListDto) {
+        User user = userRepository.findById(createListDto.getUserId()).orElse(null);
+        GroceryList groceryList = GroceryList.builder()
+                .name(createListDto.getListName())
+                .user(user)
+                .build();
         return groceryListRepository.save(groceryList);
     }
 
     public GroceryList findGroceryListById(Integer id) {
         return groceryListRepository.findById(id).orElse(null);
-    }
-
-    public GroceryList findGroceryListByUserId(User userId) {
-        return groceryListRepository.findByUserId(userId);
     }
 
     // Grocery List Items

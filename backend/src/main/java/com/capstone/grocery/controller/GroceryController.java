@@ -1,5 +1,6 @@
 package com.capstone.grocery.controller;
 
+import com.capstone.grocery.dto.CreateListDto;
 import com.capstone.grocery.model.GroceryItem;
 import com.capstone.grocery.model.GroceryList;
 import com.capstone.grocery.model.GroceryListItem;
@@ -70,10 +71,11 @@ public class GroceryController {
     }
 
     @PostMapping("/grocery-lists")
-    public GroceryList createGroceryList(@RequestBody GroceryList groceryList) {
+    public GroceryList createGroceryList(@RequestBody CreateListDto groceryList) {
         return groceryService.createGroceryList(groceryList);
     }
 
+    // TODO: Figure out why this is not working
     @PostMapping("/grocery-list-items")
     public List<GroceryListItem> createGroceryListItem(@RequestBody List<GroceryListItem> groceryListItem) {
         return groceryService.createGroceryListItem(groceryListItem);
