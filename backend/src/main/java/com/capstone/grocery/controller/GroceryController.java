@@ -76,7 +76,6 @@ public class GroceryController {
         return groceryService.createGroceryList(groceryList);
     }
 
-    // TODO: Figure out why this is not working
     @PostMapping("/grocery-list-items")
     public List<GroceryListItem> createGroceryListItem(@RequestBody List<CreateGroceryListItemDto> groceryListItemDtos) {
         return groceryService.createGroceryListItem(groceryListItemDtos);
