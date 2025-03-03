@@ -106,12 +106,12 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
         return;
       }
 
-      const { grocery_list_id } = await groceryListResponse.json();
+      const groceryListResponseBody = await groceryListResponse.json();
 
       // Save grocery list items
       const groceryListItems = groceryList.map((item) => ({
-        grocery_list_id,
-        item_id: item.id,
+        groceryListId: groceryListResponseBody.id,
+        itemId: item.id,
         quantity: item.quantity,
       }));
 

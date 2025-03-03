@@ -1,11 +1,17 @@
 package com.capstone.grocery.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @Table(name = "grocery_list_items")
+@NoArgsConstructor
+@AllArgsConstructor
 public class GroceryListItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

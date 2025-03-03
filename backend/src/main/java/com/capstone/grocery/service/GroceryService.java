@@ -1,5 +1,6 @@
 package com.capstone.grocery.service;
 
+import com.capstone.grocery.dto.CreateGroceryListItemDto;
 import com.capstone.grocery.dto.CreateListDto;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.repository.*;
@@ -72,8 +73,19 @@ public class GroceryService {
     }
 
     // Grocery List Items
-    public List<GroceryListItem> createGroceryListItem(List<GroceryListItem> groceryListItem) {
-        return groceryListItemRepository.saveAll(groceryListItem);
+    public List<GroceryListItem> createGroceryListItem(List<CreateGroceryListItemDto> groceryListItemDtos) {
+        List<GroceryListItem> groceryListItems = new ArrayList<>();
+        for (CreateGroceryListItemDto dto : groceryListItemDtos) {
+            GroceryList groceryList = groceryListRepository.findById(dto.getGroceryListId()).orElse(null);
+            GroceryItem groceryItem = groceryItemRepository.findById(dto.getItemId()).orElse(null);
+            GroceryListItem groceryListItem = GroceryListItem.builder()
+                    .groceryList(groceryList)
+                    .groceryItem(groceryItem)
+                    .quantity(dto.getQuantity())
+                    .build();
+            groceryListItems.add(groceryListItem);
+        }
+        return groceryListItemRepository.saveAll(groceryListItems);
     }
 
     public List<GroceryListItem> findGroceryListItemsByListId(Integer groceryListId) {
