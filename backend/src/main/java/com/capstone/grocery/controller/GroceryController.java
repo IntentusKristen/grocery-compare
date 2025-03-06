@@ -2,10 +2,7 @@ package com.capstone.grocery.controller;
 
 import com.capstone.grocery.dto.CreateGroceryListItemDto;
 import com.capstone.grocery.dto.CreateListDto;
-import com.capstone.grocery.model.GroceryItem;
-import com.capstone.grocery.model.GroceryList;
-import com.capstone.grocery.model.GroceryListItem;
-import com.capstone.grocery.model.GroceryStore;
+import com.capstone.grocery.model.*;
 import com.capstone.grocery.service.GroceryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +17,6 @@ public class GroceryController {
     @Autowired
     public GroceryController(GroceryService groceryService) {
         this.groceryService = groceryService;
-    }
-
-    // get all the items in a list using the list id
-    @GetMapping("/grocery-items-in-list/{groceryListId}")
-    public List<GroceryItem> getGroceryItemsInList(@PathVariable Integer groceryListId) {
-        List<GroceryListItem> groceryListItems = groceryService.findGroceryListItemsByListId(groceryListId);
-        List<Integer> groceryItemsIds = groceryService.getItemIdsFromGroceryListItems(groceryListItems);
-        return groceryService.findGroceryItemsByIds(groceryItemsIds);
     }
 
     // Grocery Lists
@@ -52,9 +41,9 @@ public class GroceryController {
         return ResponseEntity.ok(groceryService.createGroceryItem(groceryItem));
     }
 
-    @GetMapping("/grocery-items/{name}")
-    public List<GroceryItem> getGroceryItemByName(@PathVariable String name) {
-        return groceryService.findAllGroceryItemsByName(name);
+    @GetMapping("/products/{name}")
+    public ResponseEntity<List<Product>> getProductByName(@PathVariable String name) {
+        return ResponseEntity.ok(groceryService.findAllProductsByName(name));
     }
 
     @GetMapping("/all-grocery-items")
@@ -71,6 +60,11 @@ public class GroceryController {
     @PostMapping("/grocery-list-items")
     public List<GroceryListItem> createGroceryListItem(@RequestBody List<CreateGroceryListItemDto> groceryListItemDtos) {
         return groceryService.createGroceryListItem(groceryListItemDtos);
+    }
+
+    @GetMapping("/products-in-list/{groceryListId}")
+    public ResponseEntity<List<Product>> getGroceryItemsInList(@PathVariable Integer groceryListId) {
+        return ResponseEntity.ok(groceryService.getProductsFromGroceryListId(groceryListId));
     }
 
     // Grocery stores
