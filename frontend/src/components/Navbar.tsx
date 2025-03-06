@@ -39,7 +39,12 @@ const Navbar: React.FC = () => {
                 <RouterLink to="/settings">Settings</RouterLink>
               </li>
               <li>
-                <RouterLink to="/shoppinglist">Grocery List</RouterLink>
+                <RouterLink to="/shoppinglist">Create Grocery List</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/viewShoppingLists">
+                  View Grocery Lists
+                </RouterLink>
               </li>
               <li>
                 <RouterLink to="/grocerydata">Grocery Data</RouterLink>

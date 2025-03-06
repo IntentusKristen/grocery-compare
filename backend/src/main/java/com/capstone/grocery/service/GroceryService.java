@@ -72,6 +72,10 @@ public class GroceryService {
         return groceryListRepository.findById(id).orElse(null);
     }
 
+    public List<GroceryList> findGroceryListsByUserId(Integer userId) {
+        return groceryListRepository.findAllByUser_Id(userId);
+    }
+
     // Grocery List Items
     public List<GroceryListItem> createGroceryListItem(List<CreateGroceryListItemDto> groceryListItemDtos) {
         List<GroceryListItem> groceryListItems = new ArrayList<>();

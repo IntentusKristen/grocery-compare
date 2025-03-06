@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import ShoppingList from "./pages/ShoppingList";
+import ViewShoppingLists from "./pages/ViewShoppingLists";
 
 function App() {
   return (
@@ -38,6 +39,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ShoppingList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewShoppingLists"
+          element={
+            <ProtectedRoute>
+              <ViewShoppingLists />
             </ProtectedRoute>
           }
         />

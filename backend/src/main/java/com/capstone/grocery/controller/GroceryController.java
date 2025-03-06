@@ -22,16 +22,6 @@ public class GroceryController {
         this.groceryService = groceryService;
     }
 
-    @GetMapping()
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("Hello World");
-    }
-
-    @PostMapping()
-    public ResponseEntity<String> postHello() {
-        return ResponseEntity.ok("Hello World");
-    }
-
     // get all the items in a list using the list id
     @GetMapping("/grocery-items-in-list/{groceryListId}")
     public List<GroceryItem> getGroceryItemsInList(@PathVariable Integer groceryListId) {
@@ -40,25 +30,26 @@ public class GroceryController {
         return groceryService.findGroceryItemsByIds(groceryItemsIds);
     }
 
+    // Grocery Lists
+    @PostMapping("/grocery-lists")
+    public GroceryList createGroceryList(@RequestBody CreateListDto groceryList) {
+        return groceryService.createGroceryList(groceryList);
+    }
+
     @GetMapping("/grocery-list/{id}")
     public GroceryList getGroceryList(@PathVariable Integer id) {
         return groceryService.findGroceryListById(id);
     }
 
-//    @GetMapping("/grocery-list/{user_id}")
-//    public GroceryList getGroceryListByUserId(@PathVariable Long user_id) {
-//        return;
-//    }
-
-    @PostMapping("/grocery-item")
-    public ResponseEntity<GroceryItem> createGroceryItem(@RequestBody GroceryItem groceryItem) {
-//        return groceryService.createGroceryItem(groceryItem);
-        return ResponseEntity.ok(groceryService.createGroceryItem(groceryItem));
+    @GetMapping("/grocery-lists/{userId}")
+    public ResponseEntity<List<GroceryList>> getGroceryListsByUserId(@PathVariable Integer userId) {
+        return ResponseEntity.ok(groceryService.findGroceryListsByUserId(userId));
     }
 
-    @GetMapping("/grocery-list-item/{id}")
-    public GroceryItem getGroceryItemById(@PathVariable Integer id) {
-        return groceryService.findGroceryItemById(id);
+    // Grocery Items
+    @PostMapping("/grocery-item")
+    public ResponseEntity<GroceryItem> createGroceryItem(@RequestBody GroceryItem groceryItem) {
+        return ResponseEntity.ok(groceryService.createGroceryItem(groceryItem));
     }
 
     @GetMapping("/grocery-items/{name}")
@@ -71,9 +62,10 @@ public class GroceryController {
         return groceryService.findAllGroceryItems();
     }
 
-    @PostMapping("/grocery-lists")
-    public GroceryList createGroceryList(@RequestBody CreateListDto groceryList) {
-        return groceryService.createGroceryList(groceryList);
+    // Grocery List Items
+    @GetMapping("/grocery-list-item/{id}")
+    public GroceryItem getGroceryItemById(@PathVariable Integer id) {
+        return groceryService.findGroceryItemById(id);
     }
 
     @PostMapping("/grocery-list-items")
@@ -81,14 +73,10 @@ public class GroceryController {
         return groceryService.createGroceryListItem(groceryListItemDtos);
     }
 
+    // Grocery stores
     @GetMapping("/grocery-stores")
     public ResponseEntity<List<GroceryStore>> getAllGroceryStores() {
         return ResponseEntity.ok(groceryService.findAllGroceryStores());
     }
-
-//    @GetMapping("/grocery-list/{id}")
-//    public GroceryList getGroceryListById(@PathVariable Integer id) {
-//        return groceryService.findGroceryListById(id);
-//    }
 
 }
