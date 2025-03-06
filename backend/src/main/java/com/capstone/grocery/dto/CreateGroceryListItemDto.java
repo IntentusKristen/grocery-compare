@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class CreateGroceryListItemDto {
     Integer groceryListId;
-    Integer itemId;
+    Integer productId;
     Integer quantity;
 }
