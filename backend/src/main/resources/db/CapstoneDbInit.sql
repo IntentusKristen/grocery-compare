@@ -1,3 +1,9 @@
+DROP TABLE grocery_list_items;
+DROP TABLE grocery_lists;
+DROP TABLE users;
+DROP TABLE grocery_items;
+DROP TABLE stores;
+
 CREATE TABLE stores (
     store_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -36,11 +42,4 @@ CREATE TABLE grocery_list_items (
     quantity INT NOT NULL,
     FOREIGN KEY (grocery_list_id) REFERENCES grocery_lists(grocery_list_id) ON DELETE CASCADE,
     FOREIGN KEY (item_id) REFERENCES grocery_items(item_id) ON DELETE CASCADE
-);
-
-CREATE TABLE blacklisted_tokens
-(
-    token                VARCHAR(255) NULL,
-    blacklisted_token_id INT          NOT NULL
-        PRIMARY KEY
 );
