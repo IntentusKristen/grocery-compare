@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import "../style/ShoppingList.css";
 import { useAuth } from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
+import "../style/ShoppingList.css";
+import "../style/ViewShoppingLists.css";
 
 type GroceryList = {
   id: number;
@@ -48,8 +50,8 @@ const ViewShoppingLists: FunctionComponent = () => {
   return (
     <>
       <Navbar />
-      <div className="selectShoppingList">
-        <h1>Select Shopping List</h1>
+      <div className="grocery-list-container">
+        <h2>Select Shopping List</h2>
         <div className="shoppingList">
           <select
             onChange={handleItemSelection}
