@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Entity
@@ -14,8 +13,12 @@ public class GroceryItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "item_id")
     private Integer id;
-    private String name;
+
+    @Column(name = "product_id")
+    private Integer productId;
+
     private Double price;
+
     @Column(name = "date", nullable = false, updatable = false)
     private LocalDateTime date;
 

@@ -23,8 +23,8 @@ public class GroceryListItem {
     private GroceryList groceryList;
 
     @OneToOne
-    @JoinColumn(name = "item_id")
-    private GroceryItem groceryItem;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private int quantity;
 }
