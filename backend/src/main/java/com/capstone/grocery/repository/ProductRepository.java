@@ -1,6 +1,5 @@
 package com.capstone.grocery.repository;
 
-import com.capstone.grocery.model.GroceryItem;
 import com.capstone.grocery.model.Product;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
