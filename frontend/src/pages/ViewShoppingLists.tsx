@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import "../style/ShoppingList.css";
 import "../style/ViewShoppingLists.css";
+import List from "../components/shoppingList/List";
 
 type GroceryList = {
   id: number;
@@ -17,7 +18,7 @@ const ViewShoppingLists: FunctionComponent = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const [shoppingLists, setShoppingLists] = useState<GroceryList[]>([]);
-  const [selectedListId, setSelectedListId] = useState<Number | null>(null);
+  const [selectedListId, setSelectedListId] = useState<number>(-1);
 
   useEffect(() => {
     const fetchShoppingLists = async () => {
@@ -66,6 +67,7 @@ const ViewShoppingLists: FunctionComponent = () => {
           </select>
         </div>
       </div>
+      <List listId={selectedListId} />
     </>
   );
 };

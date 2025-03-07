@@ -1,9 +1,27 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
-type ListProps = {};
+type GroceryListItem = {
+  product_id: number;
+  name: string;
+  price: number;
+  store: string;
+  quantity: number;
+};
 
-const List: React.FC<ListProps> = ({}) => {
-  return <div>List Component</div>;
+type ListProps = {
+  listId: number;
+};
+
+const List: FunctionComponent<ListProps> = ({ listId }) => {
+  const { token } = useAuth();
+  const userId = jwtDecode(token ? token : "").iss;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+
+  // const [groceryList, setGroceryList] = useState<
+
+  return <></>;
 };
 
 // Use the List component
