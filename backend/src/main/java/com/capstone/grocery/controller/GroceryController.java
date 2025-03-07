@@ -2,6 +2,7 @@ package com.capstone.grocery.controller;
 
 import com.capstone.grocery.dto.CreateGroceryListItemDto;
 import com.capstone.grocery.dto.CreateListDto;
+import com.capstone.grocery.dto.ProductsInListDto;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.service.GroceryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class GroceryController {
     }
 
     @GetMapping("/products-in-list/{groceryListId}")
-    public ResponseEntity<List<Product>> getGroceryItemsInList(@PathVariable Integer groceryListId) {
+    public ResponseEntity<ProductsInListDto> getGroceryItemsInList(@PathVariable Integer groceryListId) {
         return ResponseEntity.ok(groceryService.getProductsFromGroceryListId(groceryListId));
     }
 

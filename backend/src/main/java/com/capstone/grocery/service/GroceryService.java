@@ -2,6 +2,7 @@ package com.capstone.grocery.service;
 
 import com.capstone.grocery.dto.CreateGroceryListItemDto;
 import com.capstone.grocery.dto.CreateListDto;
+import com.capstone.grocery.dto.ProductsInListDto;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.repository.*;
 import jakarta.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroceryService {
@@ -40,13 +42,19 @@ public class GroceryService {
     }
 
     // Product
-    public List<Product> getProductsFromGroceryListId(Integer groceryListId) {
+    public ProductsInListDto getProductsFromGroceryListId(Integer groceryListId) {
+        Optional<GroceryList> groceryList = groceryListRepository.findById(groceryListId);
+        if (groceryList.isEmpty()) {
+            return null;
+        }
+        String listName = groceryList.get().getName();
+
         List<GroceryListItem> groceryListItems = groceryListItemRepository.findByGroceryListId(groceryListId);
         List<Product> products = new ArrayList<>();
         for (GroceryListItem item : groceryListItems) {
             products.add(item.getProduct());
         }
-        return products;
+        return ProductsInListDto.builder().name(listName).products(products).build();
     }
 
     public List<Product> findAllProductsByName(String name) {
