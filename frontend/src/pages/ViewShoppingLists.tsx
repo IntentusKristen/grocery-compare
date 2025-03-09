@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import "../style/ShoppingList.css";
 import "../style/ViewShoppingLists.css";
-import List from "../components/shoppingList/List";
+import ListComponent from "../components/shoppingList/ListComponent";
 
 type GroceryList = {
   id: number;
@@ -58,7 +58,7 @@ const ViewShoppingLists: FunctionComponent = () => {
             onChange={handleItemSelection}
             value={String(selectedListId) || ""}
           >
-            <option value="">Select a shopping list</option>
+            <option value="-1">Select a shopping list</option>
             {shoppingLists.map((list) => (
               <option key={list.id} value={list.id}>
                 {list.name}
@@ -67,7 +67,7 @@ const ViewShoppingLists: FunctionComponent = () => {
           </select>
         </div>
       </div>
-      <List listId={selectedListId} />
+      <ListComponent listId={selectedListId} />
     </>
   );
 };
