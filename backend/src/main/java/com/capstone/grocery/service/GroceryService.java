@@ -146,6 +146,7 @@ public class GroceryService {
         }
         return StoreListPricesDto.builder()
                 .listId(groceryListId)
+                .storeId(groceryStoreId)
                 .groceryItems(groceryItems)
                 .build();
     }

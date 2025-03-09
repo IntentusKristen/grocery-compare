@@ -10,5 +10,6 @@ import java.util.List;
 @Builder
 public class StoreListPricesDto {
     private Integer listId;
+    private Integer storeId;
     private List<GroceryItem> groceryItems;
 }
