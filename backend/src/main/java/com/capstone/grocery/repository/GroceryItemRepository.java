@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroceryItemRepository extends JpaRepository<GroceryItem, Integer> {
+    GroceryItem findByProductIdAndGroceryStore_Id(Integer productId, Integer groceryStoreId);
 }

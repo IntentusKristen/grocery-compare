@@ -3,6 +3,7 @@ package com.capstone.grocery.service;
 import com.capstone.grocery.dto.CreateGroceryListItemDto;
 import com.capstone.grocery.dto.CreateListDto;
 import com.capstone.grocery.dto.ProductsInListDto;
+import com.capstone.grocery.dto.StoreListPricesDto;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.repository.*;
 import jakarta.annotation.PostConstruct;
@@ -133,6 +134,22 @@ public class GroceryService {
         return groceryStoreRepository.findById(id).orElse(null);
     }
 
+    public StoreListPricesDto getGroceryListPricesByStore(Integer groceryListId, Integer groceryStoreId) {
+        List<GroceryListItem> groceryListItems = groceryListItemRepository.findByGroceryListId(groceryListId);
+        List<GroceryItem> groceryItems = new ArrayList<>();
+        for (GroceryListItem groceryListItem : groceryListItems) {
+            GroceryItem groceryItem = groceryItemRepository.findByProductIdAndGroceryStore_Id(
+                    groceryListItem.getProduct().getId(),
+                    groceryStoreId
+            );
+            groceryItems.add(groceryItem);
+        }
+        return StoreListPricesDto.builder()
+                .listId(groceryListId)
+                .groceryItems(groceryItems)
+                .build();
+    }
+
     // User
     public User createUser(User user) {
         return userRepository.save(user);
@@ -141,5 +158,4 @@ public class GroceryService {
     public User getUserById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
-
 }
