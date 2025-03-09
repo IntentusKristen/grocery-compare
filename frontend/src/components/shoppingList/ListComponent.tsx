@@ -109,56 +109,36 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
     storeNumber: number
   ) => {
     try {
-      const response = await fetch(
-        `${baseUrl}/grocery-store-list-price/${listId}/${store1}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      if (storeNumber === 1) {
+        setStore1(Number(e.target.value));
+      } else if (storeNumber === 2) {
+        setStore2(Number(e.target.value));
+      } else if (storeNumber === 3) {
+        setStore3(Number(e.target.value));
+      }
+
+      const apiEndpoint = `${baseUrl}/grocery-store-list-price/${listId}/${Number(
+        e.target.value
+      )}`;
+      const response = await fetch(apiEndpoint, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch store prices.");
       }
 
       const storeList: StoreList = await response.json();
-      setStoreList1(storeList);
-
-      const response2 = await fetch(
-        `${baseUrl}/grocery-store-list-price/${listId}/${store2}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response2.ok) {
-        throw new Error("Failed to fetch store prices.");
+      if (storeNumber === 1) {
+        setStoreList1(storeList);
+      } else if (storeNumber === 2) {
+        setStoreList2(storeList);
+      } else if (storeNumber === 3) {
+        setStoreList3(storeList);
       }
-
-      const storeList2: StoreList = await response2.json();
-      setStoreList2(storeList2);
-
-      const response3 = await fetch(
-        `${baseUrl}/grocery-store-list-price/${listId}/${store3}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response3.ok) {
-        throw new Error("Failed to fetch store prices.");
-      }
-
-      const storeList3: StoreList = await response3.json();
-      setStoreList3(storeList3);
     } catch (error) {
       console.error("Error fetching store prices:", error);
       alert("Could not fetch store prices.");
@@ -176,7 +156,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
               <th>Quantity</th>
               <th>
                 Store 1
-                <select>
+                <select onChange={(e) => handleSetStore(e, 1)} value={store1}>
                   <option value="-1">Select Store</option>
                   {stores.map((store) => (
                     <option key={store.id} value={store.id}>
@@ -187,7 +167,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
               </th>
               <th>
                 Store 2
-                <select>
+                <select onChange={(e) => handleSetStore(e, 2)} value={store2}>
                   <option value="-1">Select Store</option>
                   {stores.map((store) => (
                     <option key={store.id} value={store.id}>
@@ -198,7 +178,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
               </th>
               <th>
                 Store 3
-                <select>
+                <select onChange={(e) => handleSetStore(e, 3)} value={store3}>
                   <option value="-1">Select Store</option>
                   {stores.map((store) => (
                     <option key={store.id} value={store.id}>
