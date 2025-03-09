@@ -104,6 +104,67 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
     fetchStores();
   }, [token, userId, baseUrl, listId]);
 
+  const handleSetStore = async (
+    e: ChangeEvent<HTMLSelectElement>,
+    storeNumber: number
+  ) => {
+    try {
+      const response = await fetch(
+        `${baseUrl}/grocery-store-list-price/${listId}/${store1}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch store prices.");
+      }
+
+      const storeList: StoreList = await response.json();
+      setStoreList1(storeList);
+
+      const response2 = await fetch(
+        `${baseUrl}/grocery-store-list-price/${listId}/${store2}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response2.ok) {
+        throw new Error("Failed to fetch store prices.");
+      }
+
+      const storeList2: StoreList = await response2.json();
+      setStoreList2(storeList2);
+
+      const response3 = await fetch(
+        `${baseUrl}/grocery-store-list-price/${listId}/${store3}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response3.ok) {
+        throw new Error("Failed to fetch store prices.");
+      }
+
+      const storeList3: StoreList = await response3.json();
+      setStoreList3(storeList3);
+    } catch (error) {
+      console.error("Error fetching store prices:", error);
+      alert("Could not fetch store prices.");
+    }
+  };
+
   return (
     <>
       <div className="list-container">
@@ -114,6 +175,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
               <th>Item</th>
               <th>Quantity</th>
               <th>
+                Store 1
                 <select>
                   <option value="-1">Select Store</option>
                   {stores.map((store) => (
@@ -123,8 +185,28 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
                   ))}
                 </select>
               </th>
-              <th>Select Store 2</th>
-              <th>Select Store 3</th>
+              <th>
+                Store 2
+                <select>
+                  <option value="-1">Select Store</option>
+                  {stores.map((store) => (
+                    <option key={store.id} value={store.id}>
+                      {store.name}
+                    </option>
+                  ))}
+                </select>
+              </th>
+              <th>
+                Store 3
+                <select>
+                  <option value="-1">Select Store</option>
+                  {stores.map((store) => (
+                    <option key={store.id} value={store.id}>
+                      {store.name}
+                    </option>
+                  ))}
+                </select>
+              </th>
             </tr>
           </thead>
           <tbody>
