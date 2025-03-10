@@ -18,8 +18,9 @@ type Store = {
 };
 
 type Product = {
-  id: number;
+  productId: number;
   name: string;
+  quantity: number;
 };
 
 type List = {
@@ -29,7 +30,6 @@ type List = {
 
 type Item = {
   productId: number;
-  quantity: number;
   price: number;
 };
 
@@ -73,7 +73,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
         const map: Map<string, number> = new Map();
         list.products.forEach((product) => {
           for (let i = 0; i < 3; i++) {
-            map.set(serializeTuple([product.id, i]), 0);
+            map.set(serializeTuple([product.productId, i]), 0);
           }
         });
         setPriceMap(map);
@@ -199,20 +199,63 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
           </thead>
           <tbody>
             {list?.products.map((product) => (
-              <tr key={product.id}>
+              <tr key={product.productId}>
                 <td>{product.name}</td>
-                <td>1</td>
+                <td>{product.quantity}</td>
                 <td>
-                  <input type="checkbox" />
+                  {(
+                    (priceMap.get(serializeTuple([product.productId, 0])) ||
+                      0) * product.quantity
+                  ).toFixed(2)}
                 </td>
                 <td>
-                  <input type="checkbox" />
+                  {(
+                    (priceMap.get(serializeTuple([product.productId, 1])) ||
+                      0) * product.quantity
+                  ).toFixed(2)}
                 </td>
                 <td>
-                  <input type="checkbox" />
+                  {(
+                    (priceMap.get(serializeTuple([product.productId, 2])) ||
+                      0) * product.quantity
+                  ).toFixed(2)}
                 </td>
               </tr>
             ))}
+            <tr>
+              <td>Total</td>
+              <td></td>
+              <td>
+                {list?.products
+                  .map(
+                    (product) =>
+                      (priceMap.get(serializeTuple([product.productId, 0])) ||
+                        0) * product.quantity
+                  )
+                  .reduce((a, b) => a + b, 0)
+                  ?.toFixed(2)}
+              </td>
+              <td>
+                {list?.products
+                  .map(
+                    (product) =>
+                      (priceMap.get(serializeTuple([product.productId, 1])) ||
+                        0) * product.quantity
+                  )
+                  .reduce((a, b) => a + b, 0)
+                  ?.toFixed(2)}
+              </td>
+              <td>
+                {list?.products
+                  .map(
+                    (product) =>
+                      (priceMap.get(serializeTuple([product.productId, 2])) ||
+                        0) * product.quantity
+                  )
+                  .reduce((a, b) => a + b, 0)
+                  ?.toFixed(2)}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
