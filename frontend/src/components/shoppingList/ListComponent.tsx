@@ -51,9 +51,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
   const [store1, setStore1] = useState<number>(-1);
   const [store2, setStore2] = useState<number>(-1);
   const [store3, setStore3] = useState<number>(-1);
-  const [storeList1, setStoreList1] = useState<StoreList | null>(null);
-  const [storeList2, setStoreList2] = useState<StoreList | null>(null);
-  const [storeList3, setStoreList3] = useState<StoreList | null>(null);
+  const [priceMap, setPriceMap] = useState<Map<string, number>>(new Map());
 
   useEffect(() => {
     const fetchList = async () => {
@@ -71,6 +69,14 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
 
         const list: List = await response.json();
         setList(list);
+
+        const map: Map<string, number> = new Map();
+        list.products.forEach((product) => {
+          for (let i = 0; i < 3; i++) {
+            map.set(serializeTuple([product.id, i]), 0);
+          }
+        });
+        setPriceMap(map);
       } catch (error) {
         console.error("Error fetching list:", error);
         alert("Could not fetch list.");
@@ -117,6 +123,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
         setStore3(Number(e.target.value));
       }
 
+      if (listId === -1) return;
       const apiEndpoint = `${baseUrl}/grocery-store-list-price/${listId}/${Number(
         e.target.value
       )}`;
@@ -132,13 +139,14 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
       }
 
       const storeList: StoreList = await response.json();
-      if (storeNumber === 1) {
-        setStoreList1(storeList);
-      } else if (storeNumber === 2) {
-        setStoreList2(storeList);
-      } else if (storeNumber === 3) {
-        setStoreList3(storeList);
-      }
+      storeList.groceryItems.forEach((item) => {
+        setPriceMap((prevMap) =>
+          new Map(prevMap).set(
+            serializeTuple([item.productId, storeNumber - 1]),
+            item.price
+          )
+        );
+      });
     } catch (error) {
       console.error("Error fetching store prices:", error);
       alert("Could not fetch store prices.");
@@ -214,3 +222,8 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
 
 // Use the List component
 export default ListComponent;
+
+// Helper function(s)
+const serializeTuple = (tuple: [number, number]): string => {
+  return tuple.join(",");
+};
