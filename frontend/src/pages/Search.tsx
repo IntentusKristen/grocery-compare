@@ -100,7 +100,7 @@ type GroceryItem = {
 
 const Search: React.FC<SearchProp> = () => {
   const [keyword, setKeyword] = useState('');
-  const [filter, setFilter] = useState('item');
+  const [filter, setFilter] = useState<GroceryItem[]>([]);
   const [found, setFound] = useState<GroceryItem[]>([]);
   const [stores, setStores] = useState([]);
 
@@ -151,7 +151,7 @@ const Search: React.FC<SearchProp> = () => {
           // {"product_id": 7, "price": 4.10, "store_id": 4, "date": "2025-03-04"}
       ]
       
-        
+        setFilter(items)
         setFound(items);
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -161,7 +161,19 @@ const Search: React.FC<SearchProp> = () => {
     fetchItems();
   };
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilter(e.target.value);
+    let items = []
+    if (e.target.value == "None"){
+      items = found
+    }
+    else{
+      for (let i = 0; i < found.length; i++){
+        if (found[i].store_id.toString() == e.target.value){
+          items.push(found[i])
+        }
+      }
+    }
+    
+    setFilter(items)
   };
 
   return (
@@ -185,12 +197,13 @@ const Search: React.FC<SearchProp> = () => {
           <div className="form-group">
             <label htmlFor="filter">Store:</label>
             <select id="filter" onChange={handleFilter}>
-              <option value="item">Item Name</option>
-              <option value="store">Store</option>
-              <option value="test">Test</option>
+              <option value="None">None</option>
+              {found.map((item) => (
+                <option value={item.store_id}>{item.store_id}</option>
+              ))}
             </select>
           </div>
-          {found.map((item) => (
+          {filter.map((item) => (
             <div>
               <h2>{item.product_id}</h2>
               <h3>Store: {item.store_id}</h3>
