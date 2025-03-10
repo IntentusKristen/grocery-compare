@@ -1,6 +1,5 @@
 package com.capstone.grocery.dto;
 
-import com.capstone.grocery.model.Product;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,5 +9,5 @@ import java.util.List;
 @Builder
 public class ProductsInListDto {
     private String name;
-    private List<Product> products;
+    private List<ProductInListDto> products;
 }
