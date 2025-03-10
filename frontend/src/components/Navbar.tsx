@@ -17,6 +17,9 @@ const Navbar: React.FC = () => {
           <li>
             <RouterLink to="/">Home</RouterLink>
           </li>
+          <li>
+            <RouterLink to="/search">Search</RouterLink>
+          </li>
 
           {!token && (
             <>

@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Search from './pages/Search';
 import Settings from "./pages/Settings";
 import ShoppingList from "./pages/ShoppingList";
+import ViewShoppingLists from "./pages/ViewShoppingLists";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/search" element={<Search />} />
         <Route
           path="/settings"
           element={
