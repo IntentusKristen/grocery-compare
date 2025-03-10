@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "../style/ShoppingList.css";
 import { useAuth } from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
 type GroceryItem = {
   id: number;
@@ -12,6 +13,8 @@ type ShoppingListProps = {};
 
 const ShoppingList: React.FC<ShoppingListProps> = () => {
   const { token } = useAuth();
+  const userId = jwtDecode(token ? token : "").iss;
+
   const [allItems, setAllItems] = useState<GroceryItem[]>([]);
   const [groceryList, setGroceryList] = useState<
     { id: number; name: string; quantity: number }[]
@@ -19,13 +22,13 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   const [listName, setListName] = useState<string>("");
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
-  const userId = 1;
+
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
   // Fetch all grocery items on component mount
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const baseUrl = process.env.REACT_APP_BASE_URL;
         const response = await fetch(`${baseUrl}/all-grocery-items`, {
           method: "GET",
           headers: {
@@ -43,7 +46,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
       }
     };
     fetchItems();
-  }, []);
+  }, [baseUrl, token, userId]);
 
   const handleListNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListName(e.target.value);
@@ -89,37 +92,36 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
 
     try {
       // Save grocery list
-      const groceryListResponse = await fetch(
-        "http://localhost:8080/grocery-list",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name: listName, user_id: userId }),
-        }
-      );
+      const groceryListResponse = await fetch(`${baseUrl}/grocery-lists`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ listName: listName, userId: Number(userId) }),
+      });
 
       if (!groceryListResponse.ok) {
         alert("Failed to save the grocery list. Please try again.");
         return;
       }
 
-      const { grocery_list_id } = await groceryListResponse.json();
+      const groceryListResponseBody = await groceryListResponse.json();
 
       // Save grocery list items
       const groceryListItems = groceryList.map((item) => ({
-        grocery_list_id,
-        item_id: item.id,
+        groceryListId: groceryListResponseBody.id,
+        itemId: item.id,
         quantity: item.quantity,
       }));
 
       const groceryItemsResponse = await fetch(
-        "http://localhost:8080/grocery-list-items",
+        `${baseUrl}/grocery-list-items`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(groceryListItems),
         }
@@ -141,7 +143,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
     <>
       <Navbar />
       <div className="grocery-list-container">
-        <h2>Shopping List</h2>
+        <h2>Grocery List</h2>
 
         <div>
           <input

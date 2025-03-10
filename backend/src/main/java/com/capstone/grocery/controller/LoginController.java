@@ -29,11 +29,6 @@ public class LoginController {
         this.userAuthProvider = userAuthProvider;
     }
 
-    @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        return groceryService.createUser(user);
-    }
-
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable Integer id) {
         return groceryService.getUserById(id);
@@ -42,15 +37,22 @@ public class LoginController {
     @PostMapping("/authenticate")
     public ResponseEntity<UserDto> login(@RequestBody LoginDto loginDto) {
         UserDto user = userService.login(loginDto);
-        user.setToken(userAuthProvider.createToken(user.getEmail()));
+        user.setToken(userAuthProvider.createToken(user.getId(), user.getEmail()));
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody RegisterDto registerDto) {
         UserDto user = userService.register(registerDto);
-        user.setToken(userAuthProvider.createToken(user.getEmail()));
+        user.setToken(userAuthProvider.createToken(user.getId(), user.getEmail()));
         return ResponseEntity.created(URI.create("/users/" + user.getId())).body(user);
+    }
+
+    @GetMapping("/signout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String header) {
+        String token = header.split(" ")[1];
+        userAuthProvider.invalidateToken(token);
+        return ResponseEntity.ok("Logged out successfully");
     }
 
     @ExceptionHandler(InvalidUserException.class)

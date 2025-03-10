@@ -5,6 +5,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import GroceryData from "./pages/GroceryData";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Search from './pages/Search';
 import Settings from "./pages/Settings";
 import ShoppingList from "./pages/ShoppingList";
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/settings"
           element={
@@ -36,6 +38,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ShoppingList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewShoppingLists"
+          element={
+            <ProtectedRoute>
+              <ViewShoppingLists />
             </ProtectedRoute>
           }
         />

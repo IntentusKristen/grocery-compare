@@ -1,9 +1,17 @@
 package com.capstone.grocery.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "grocery_lists")
 public class GroceryList {
@@ -12,8 +20,14 @@ public class GroceryList {
     @Column(name = "grocery_list_id")
     private Integer id;
     private String name;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
+
+    @PrePersist
+    protected void onCreate() {
+        date = LocalDateTime.now();
+    }
 }
