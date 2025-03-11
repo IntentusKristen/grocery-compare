@@ -36,7 +36,7 @@ type Item = {
 type StoreList = {
   listId: number;
   storeId: number;
-  groceryItems: Item[];
+  groceryItems: (Item | null)[];
 };
 
 const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
@@ -97,7 +97,9 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
                 storeId
               );
               storeList.groceryItems.forEach((item) => {
-                map.set(serializeTuple([item.productId, j]), item.price);
+                if (item) {
+                  map.set(serializeTuple([item.productId, j]), item.price);
+                }
               });
             }
           }
@@ -158,12 +160,14 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
       );
 
       storeList.groceryItems.forEach((item) => {
-        setPriceMap((prevMap) =>
-          new Map(prevMap).set(
-            serializeTuple([item.productId, storeNumber - 1]),
-            item.price
-          )
-        );
+        if (item) {
+          setPriceMap((prevMap) =>
+            new Map(prevMap).set(
+              serializeTuple([item.productId, storeNumber - 1]),
+              item.price
+            )
+          );
+        }
       });
     } catch (error) {
       console.error("Error fetching store prices:", error);
@@ -221,22 +225,25 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
                 <td>{product.name}</td>
                 <td>{product.quantity}</td>
                 <td>
-                  {(
-                    (priceMap.get(serializeTuple([product.productId, 0])) ||
-                      0) * product.quantity
-                  ).toFixed(2)}
+                  {priceMap.has(serializeTuple([product.productId, 0]))
+                    ? priceMap
+                        .get(serializeTuple([product.productId, 0]))
+                        ?.toFixed(2)
+                    : "N/A"}
                 </td>
                 <td>
-                  {(
-                    (priceMap.get(serializeTuple([product.productId, 1])) ||
-                      0) * product.quantity
-                  ).toFixed(2)}
+                  {priceMap.has(serializeTuple([product.productId, 1]))
+                    ? priceMap
+                        .get(serializeTuple([product.productId, 1]))
+                        ?.toFixed(2)
+                    : "N/A"}
                 </td>
                 <td>
-                  {(
-                    (priceMap.get(serializeTuple([product.productId, 2])) ||
-                      0) * product.quantity
-                  ).toFixed(2)}
+                  {priceMap.has(serializeTuple([product.productId, 2]))
+                    ? priceMap
+                        .get(serializeTuple([product.productId, 2]))
+                        ?.toFixed(2)
+                    : "N/A"}
                 </td>
               </tr>
             ))}
