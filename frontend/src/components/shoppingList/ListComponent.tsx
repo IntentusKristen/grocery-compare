@@ -71,11 +71,37 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
         setList(list);
 
         const map: Map<string, number> = new Map();
-        list.products.forEach((product) => {
-          for (let i = 0; i < 3; i++) {
-            map.set(serializeTuple([product.productId, i]), 0);
+        for (let i = 0; i < list.products.length; i++) {
+          const product = list.products[i];
+          for (let j = 0; j < 3; j++) {
+            let storeId = -1;
+            switch (j) {
+              case 0:
+                storeId = store1;
+                break;
+              case 1:
+                storeId = store2;
+                break;
+              case 2:
+                storeId = store3;
+                break;
+            }
+
+            if (storeId === -1) {
+              map.set(serializeTuple([product.productId, j]), 0);
+            } else {
+              const storeList: StoreList = await fetchStorePrices(
+                baseUrl,
+                token,
+                listId,
+                storeId
+              );
+              storeList.groceryItems.forEach((item) => {
+                map.set(serializeTuple([item.productId, j]), item.price);
+              });
+            }
           }
-        });
+        }
         setPriceMap(map);
       } catch (error) {
         console.error("Error fetching list:", error);
@@ -108,7 +134,7 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
       fetchList();
     }
     fetchStores();
-  }, [token, userId, baseUrl, listId]);
+  }, [token, userId, baseUrl, listId, store1, store2, store3]);
 
   const handleSetStore = async (
     e: ChangeEvent<HTMLSelectElement>,
@@ -124,21 +150,13 @@ const ListComponent: FunctionComponent<ListProps> = ({ listId }) => {
       }
 
       if (listId === -1) return;
-      const apiEndpoint = `${baseUrl}/grocery-store-list-price/${listId}/${Number(
-        e.target.value
-      )}`;
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const storeList: StoreList = await fetchStorePrices(
+        baseUrl,
+        token,
+        listId,
+        Number(e.target.value)
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch store prices.");
-      }
-
-      const storeList: StoreList = await response.json();
       storeList.groceryItems.forEach((item) => {
         setPriceMap((prevMap) =>
           new Map(prevMap).set(
@@ -269,4 +287,25 @@ export default ListComponent;
 // Helper function(s)
 const serializeTuple = (tuple: [number, number]): string => {
   return tuple.join(",");
+};
+
+const fetchStorePrices = async (
+  baseUrl: string | undefined,
+  token: string | null,
+  listId: number,
+  storeId: number
+): Promise<StoreList> => {
+  const apiEndpoint = `${baseUrl}/grocery-store-list-price/${listId}/${storeId}`;
+  const response = await fetch(apiEndpoint, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch store prices.");
+  }
+
+  return await response.json();
 };
