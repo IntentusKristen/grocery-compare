@@ -1,11 +1,17 @@
 package com.capstone.grocery.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @Table(name = "grocery_list_items")
+@NoArgsConstructor
+@AllArgsConstructor
 public class GroceryListItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,8 +23,8 @@ public class GroceryListItem {
     private GroceryList groceryList;
 
     @OneToOne
-    @JoinColumn(name = "item_id")
-    private GroceryItem groceryItem;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private int quantity;
 }

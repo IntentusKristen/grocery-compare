@@ -1,5 +1,6 @@
 package com.capstone.grocery.service;
 
+import com.capstone.grocery.dto.*;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.repository.*;
 import jakarta.annotation.PostConstruct;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroceryService {
@@ -17,22 +19,49 @@ public class GroceryService {
     private final GroceryListRepository groceryListRepository;
     private final UserRepository userRepository;
     private final GroceryListItemRepository groceryListItemRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
     public GroceryService(GroceryItemRepository groceryItemRepository, GroceryStoreRepository groceryStoreRepository,
                           GroceryListRepository groceryListRepository, UserRepository userRepository,
-                          GroceryListItemRepository groceryListItemRepository) {
+                          GroceryListItemRepository groceryListItemRepository, ProductRepository productRepository) {
         this.groceryItemRepository = groceryItemRepository;
         this.groceryStoreRepository = groceryStoreRepository;
         this.groceryListRepository = groceryListRepository;
         this.userRepository = userRepository;
         this.groceryListItemRepository = groceryListItemRepository;
+        this.productRepository = productRepository;
     }
 
     @PostConstruct
     public void testConnection() {
         List<GroceryItem> items = groceryItemRepository.findAll();
         System.out.println("Number of items in the database: " + items.size());
+    }
+
+    // Product
+    public ProductsInListDto getProductsFromGroceryListId(Integer groceryListId) {
+        Optional<GroceryList> groceryList = groceryListRepository.findById(groceryListId);
+        if (groceryList.isEmpty()) {
+            return null;
+        }
+        String listName = groceryList.get().getName();
+
+        List<GroceryListItem> groceryListItems = groceryListItemRepository.findByGroceryListId(groceryListId);
+        List<ProductInListDto> products = new ArrayList<>();
+        for (GroceryListItem item : groceryListItems) {
+            ProductInListDto product = ProductInListDto.builder()
+                    .productId(item.getProduct().getId())
+                    .name(item.getProduct().getName())
+                    .quantity(item.getQuantity())
+                    .build();
+            products.add(product);
+        }
+        return ProductsInListDto.builder().name(listName).products(products).build();
+    }
+
+    public List<Product> findAllProductsByName(String name) {
+        return productRepository.findAllByNameIgnoreCase(name);
     }
 
     // Grocery Item
@@ -44,20 +73,17 @@ public class GroceryService {
         return groceryItemRepository.findById(id).orElse(null);
     }
 
-    public List<GroceryItem> findGroceryItemsByIds(List<Integer> ids) {
-        return groceryItemRepository.findAllById(ids);
-    }
-
-    public List<GroceryItem> findAllGroceryItemsByName(String name) {
-        return groceryItemRepository.findAllByNameIgnoreCase(name);
-    }
-
     public List<GroceryItem> findAllGroceryItems(){
         return groceryItemRepository.findAll();
     }
 
     // Grocery List
-    public GroceryList createGroceryList(GroceryList groceryList) {
+    public GroceryList createGroceryList(CreateListDto createListDto) {
+        User user = userRepository.findById(createListDto.getUserId()).orElse(null);
+        GroceryList groceryList = GroceryList.builder()
+                .name(createListDto.getListName())
+                .user(user)
+                .build();
         return groceryListRepository.save(groceryList);
     }
 
@@ -65,25 +91,36 @@ public class GroceryService {
         return groceryListRepository.findById(id).orElse(null);
     }
 
-    public GroceryList findGroceryListByUserId(User userId) {
-        return groceryListRepository.findByUserId(userId);
+    public List<GroceryList> findGroceryListsByUserId(Integer userId) {
+        return groceryListRepository.findAllByUser_Id(userId);
     }
 
     // Grocery List Items
-    public GroceryListItem createGroceryListItem(GroceryListItem groceryListItem) {
-        return groceryListItemRepository.save(groceryListItem);
+    public List<GroceryListItem> createGroceryListItem(List<CreateGroceryListItemDto> groceryListItemDtos) {
+        List<GroceryListItem> groceryListItems = new ArrayList<>();
+        for (CreateGroceryListItemDto dto : groceryListItemDtos) {
+            GroceryList groceryList = groceryListRepository.findById(dto.getGroceryListId()).orElse(null);
+            Product product = productRepository.findById(dto.getProductId()).orElse(null);
+            GroceryListItem groceryListItem = GroceryListItem.builder()
+                    .groceryList(groceryList)
+                    .product(product)
+                    .quantity(dto.getQuantity())
+                    .build();
+            groceryListItems.add(groceryListItem);
+        }
+        return groceryListItemRepository.saveAll(groceryListItems);
     }
 
     public List<GroceryListItem> findGroceryListItemsByListId(Integer groceryListId) {
         return groceryListItemRepository.findByGroceryListId(groceryListId);
     }
 
-    public List<Integer> getItemIdsFromGroceryListItems(List<GroceryListItem> groceryListItems) {
-        List<Integer> itemIds = new ArrayList<>();
+    public List<Product> getProductsFromGroceryListItems(List<GroceryListItem> groceryListItems) {
+        List<Product> products = new ArrayList<>();
         for (GroceryListItem item : groceryListItems) {
-            itemIds.add(item.getId());
+            products.add(item.getProduct());
         }
-        return itemIds;
+        return products;
     }
 
     // Grocery Store
@@ -91,8 +128,29 @@ public class GroceryService {
         return groceryStoreRepository.save(groceryStore);
     }
 
+    public List<GroceryStore> findAllGroceryStores() {
+        return groceryStoreRepository.findAll();
+    }
+
     public GroceryStore findGroceryStoreById(Integer id) {
         return groceryStoreRepository.findById(id).orElse(null);
+    }
+
+    public StoreListPricesDto getGroceryListPricesByStore(Integer groceryListId, Integer groceryStoreId) {
+        List<GroceryListItem> groceryListItems = groceryListItemRepository.findByGroceryListId(groceryListId);
+        List<GroceryItem> groceryItems = new ArrayList<>();
+        for (GroceryListItem groceryListItem : groceryListItems) {
+            GroceryItem groceryItem = groceryItemRepository.findByProductIdAndGroceryStore_Id(
+                    groceryListItem.getProduct().getId(),
+                    groceryStoreId
+            );
+            groceryItems.add(groceryItem);
+        }
+        return StoreListPricesDto.builder()
+                .listId(groceryListId)
+                .storeId(groceryStoreId)
+                .groceryItems(groceryItems)
+                .build();
     }
 
     // User
@@ -103,5 +161,4 @@ public class GroceryService {
     public User getUserById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
-
 }

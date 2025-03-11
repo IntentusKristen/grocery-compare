@@ -6,15 +6,15 @@ body {
   font-family: Arial, sans-serif; /* Clean font */
 }
 
-/* Center the login container with slight upward shift */
+/* Center the login container with a slightly higher position */
 .login-container {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  height: calc(100vh - 100px); /* Reduce height to create vertical space above */
-  text-align: center; /* Center align text inside */
-  margin-top: -50px; /* Shift container upwards */
+  height: 100vh; /* Use full viewport height */
+  text-align: center;
+  margin-top: -40px; /* Move the container slightly higher */
 }
 
 /* Style the heading */
@@ -37,30 +37,39 @@ body {
 /* Style input fields */
 .login-form input[type="text"],
 .login-form input[type="password"] {
-  width: 100%; /* Full width of input fields */
+  width: 100%;
   padding: 0.75rem;
-  margin-bottom: 1rem; /* Spacing between inputs */
-  border: 1px solid #50c878; /* Emerald green border */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #282c34; /* Match navbar background */
-  color: white; /* White text */
+  margin-bottom: 1rem;
+  border: 1px solid #50c878;
+  border-radius: 5px;
+  background-color: #282c34;
+  color: white;
   font-size: 1rem;
-  outline: none; /* Remove default outline */
+  outline: none;
 }
 
 .login-form input[type="text"]:focus,
 .login-form input[type="password"]:focus {
-  border-color: #50c878; /* Highlight border on focus */
-  box-shadow: 0 0 5px #50c878; /* Subtle green glow effect */
+  border-color: #50c878;
+  box-shadow: 0 0 5px #50c878;
+}
+
+/* Style labels (Email and Password texts) */
+.login-form .form-group label {
+  color: #ddd; /* grey text for labels */
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block; /* Ensure labels sit above inputs */
+  text-align: left;
 }
 
 /* Style the submit button */
 .login-form button {
-  width: 100%; /* Full width of the button */
+  width: 100%;
   padding: 0.75rem;
   border: none;
-  border-radius: 5px; /* Rounded corners */
-  background-color: #50c878; /* Emerald green */
+  border-radius: 5px;
+  background-color: #50c878;
   color: white;
   font-size: 1rem;
   cursor: pointer;
@@ -68,20 +77,21 @@ body {
 }
 
 .login-form button:hover {
-  background-color: #45a049; /* Slightly darker emerald green */
+  background-color: #45a049;
 }
 
-/* Add a subtle footer link */
-.login-footer {
-  margin-top: 1rem;
-  font-size: 0.9rem;
+/* Register link styling */
+.login-container .register-link {
+  margin-top: 1rem; /* Add spacing above the link */
+  font-size: 1.1rem;
 }
 
-.login-footer a {
-  color: #50c878; /* Emerald green */
-  text-decoration: none;
+.login-container .register-link a {
+  color: white; /* White text for the link */
+  text-decoration: none; /* Remove underline */
+  cursor: pointer;
 }
 
-.login-footer a:hover {
-  text-decoration: underline;
+.login-container .register-link a:hover {
+  text-decoration: underline; /* Underline on hover */
 }

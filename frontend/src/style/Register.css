@@ -1,0 +1,82 @@
+/* Set the entire page background color */
+body {
+    background-color: #282c34; /* Dark background */
+    color: white; /* White text color */
+    margin: 0;
+    font-family: Arial, sans-serif; /* Clean font */
+  }
+  
+  /* Center the register container */
+  .register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    height: auto; /* Adjust container height */
+    text-align: center;
+    margin-top: 50px; /* Move the form down from the navbar */
+  }
+  
+  /* Style the heading */
+  .register-container h2 {
+    font-size: 2rem;
+    color: #50c878; /* Emerald green */
+    margin-bottom: 1rem;
+  }
+  
+  /* Style the register form box */
+  .register-form {
+    background-color: #1c1e22; /* Slightly lighter dark background */
+    border: 2px solid #50c878; /* Emerald green border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 1.5rem; /* Reduced internal spacing */
+    width: 350px; /* Adjusted width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  /* Style input fields */
+  .register-form input[type="text"],
+  .register-form input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 0.5rem; /* Compact padding */
+    margin-bottom: 0.75rem; /* Smaller space between inputs */
+    border: 1px solid #50c878; /* Emerald green border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #282c34; /* Match navbar background */
+    color: white; /* White text */
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .register-form input[type="text"]:focus,
+  .register-form input[type="password"]:focus {
+    border-color: #50c878; /* Highlight border */
+    box-shadow: 0 0 5px #50c878; /* Glow effect */
+  }
+  
+  /* Style labels */
+  .register-form .form-group label {
+    font-size: 0.9rem;
+    display: block; /* Place label above input */
+    text-align: left; /* Align label to the left */
+    margin-bottom: 0.25rem;
+    color: #ddd; /* Light grey text for labels */
+  }
+  
+  /* Style the submit button */
+  .register-form button {
+    width: 100%; /* Full width */
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #50c878; /* Emerald green */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-form button:hover {
+    background-color: #45a049; /* Slightly darker green */
+  }
+  
