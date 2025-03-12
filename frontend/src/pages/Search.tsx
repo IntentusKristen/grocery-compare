@@ -96,8 +96,13 @@ type SearchProp = {};
 type GroceryItem = {
   product_id: number;
   price: number;
-  store_id: number;
+  groceryStore: Store;
   date: string
+};
+type Store = {
+  id: number;
+  name: string;
+  address: string;
 };
 type Product = {
   id: number;
@@ -199,7 +204,7 @@ const Search: React.FC<SearchProp> = () => {
     }
     else{
       for (let i = 0; i < found.length; i++){
-        if (found[i].store_id.toString() == e.target.value){
+        if (found[i].groceryStore.address.toString() == e.target.value){
           items.push(found[i])
         }
       }
@@ -231,14 +236,14 @@ const Search: React.FC<SearchProp> = () => {
             <select id="filter" onChange={handleFilter}>
               <option value="None">None</option>
               {found.map((item) => (
-                <option value={item.store_id}>{item.store_id}</option>
+                <option value={item.groceryStore.id}>{item.groceryStore.name}, {item.groceryStore.address}</option>
               ))}
             </select>
           </div>
           {filter.map((item) => (
             <div>
               <h2>{item.product_id}</h2>
-              <h3>Store: {item.store_id}</h3>
+              <h3>Store: {item.groceryStore.name}, {item.groceryStore.address}</h3>
               <h3>Price: {item.price}</h3>
               <h3>Information Last Updated: {item.date}</h3>
             </div>
