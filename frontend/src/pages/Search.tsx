@@ -204,7 +204,7 @@ const Search: React.FC<SearchProp> = () => {
     }
     else{
       for (let i = 0; i < found.length; i++){
-        if (found[i].groceryStore.address.toString() == e.target.value){
+        if (found[i].groceryStore.id.toString() == e.target.value){
           items.push(found[i])
         }
       }
