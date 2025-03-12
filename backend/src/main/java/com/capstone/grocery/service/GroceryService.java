@@ -20,17 +20,19 @@ public class GroceryService {
     private final UserRepository userRepository;
     private final GroceryListItemRepository groceryListItemRepository;
     private final ProductRepository productRepository;
+    private final SearchRepository searchRepository;
 
     @Autowired
     public GroceryService(GroceryItemRepository groceryItemRepository, GroceryStoreRepository groceryStoreRepository,
                           GroceryListRepository groceryListRepository, UserRepository userRepository,
-                          GroceryListItemRepository groceryListItemRepository, ProductRepository productRepository) {
+                          GroceryListItemRepository groceryListItemRepository, ProductRepository productRepository, SearchRepository searchRepository) {
         this.groceryItemRepository = groceryItemRepository;
         this.groceryStoreRepository = groceryStoreRepository;
         this.groceryListRepository = groceryListRepository;
         this.userRepository = userRepository;
         this.groceryListItemRepository = groceryListItemRepository;
         this.productRepository = productRepository;
+        this.searchRepository = searchRepository;
     }
 
     @PostConstruct
@@ -60,6 +62,19 @@ public class GroceryService {
 
     public GroceryItem findGroceryItemById(Integer id) {
         return groceryItemRepository.findById(id).orElse(null);
+    }
+
+    public List<GroceryItem> findGroceryItemByName(String name) {
+        List<Product> products = productRepository.findAllByNameIgnoreCase(name);
+        List<GroceryItem> available = new ArrayList<>();
+        for(Product product: products){
+            List<GroceryItem> items = searchRepository.findByProductId(product.getId());
+
+            if (items != null && !items.isEmpty()) {
+                available.addAll(items);
+            }
+        }
+        return available;
     }
 
     public List<GroceryItem> findAllGroceryItems(){

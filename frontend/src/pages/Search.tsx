@@ -1,5 +1,7 @@
+import { jwtDecode } from "jwt-decode";
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import { useAuth } from "../hooks/useAuth";
 import '../style/Search.css';
 
 // type SearchProp = {};
@@ -97,8 +99,15 @@ type GroceryItem = {
   store_id: number;
   date: string
 };
+type Product = {
+  id: number;
+  name: string;
+};
 
 const Search: React.FC<SearchProp> = () => {
+  const { token } = useAuth();
+  const userId = jwtDecode(token ? token : "").iss;
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const [keyword, setKeyword] = useState('');
   const [filter, setFilter] = useState<GroceryItem[]>([]);
   const [found, setFound] = useState<GroceryItem[]>([]);
@@ -113,18 +122,41 @@ const Search: React.FC<SearchProp> = () => {
     // Add your Search logic here
     const fetchItems = async () => {
       try {
-        //template to pull from backend
-        // const response = await fetch(`http://localhost:8080/grocery-items/${keyword}`);
+        // template to pull from backend
+        //const response = await fetch(`http://localhost:8080/grocery-items/${keyword}`);
+
+        // const response = await fetch(`${baseUrl}/products/${keyword}`, {
+        //   method: "GET",
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
 
         // if (!response.ok) {
         //   throw new Error("Failed to fetch grocery items.");
         // }
-        // const items: GroceryItem[] = await response.json();
-        const items: GroceryItem[] = [
-          {"product_id": 1, "price": 0.99, "store_id": 1, "date": "2025-03-01"},
-          {"product_id": 1, "price": 1.09, "store_id": 2, "date": "2025-03-02"},
-          {"product_id": 1, "price": 0.95, "store_id": 3, "date": "2025-03-03"},
-          {"product_id": 1, "price": 1.15, "store_id": 4, "date": "2025-03-04"}
+        // const groceries: Product[] = await response.json();
+        //console.dir(groceries, {'maxArrayLength': null});
+        //console.log(groceries[0].id)
+
+        const response = await fetch(`${baseUrl}/search/${keyword}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch grocery items.");
+        }
+        const items: GroceryItem[] = await response.json();
+
+        console.dir(items, {'maxArrayLength': null});
+        // const items: GroceryItem[] = [
+        //   {"product_id": 1, "price": 0.99, "store_id": 1, "date": "2025-03-01"},
+        //   {"product_id": 1, "price": 1.09, "store_id": 2, "date": "2025-03-02"},
+        //   {"product_id": 1, "price": 0.95, "store_id": 3, "date": "2025-03-03"},
+        //   {"product_id": 1, "price": 1.15, "store_id": 4, "date": "2025-03-04"}
           // {"product_id": 2, "price": 0.59, "store_id": 1, "date": "2025-03-01"},
           // {"product_id": 2, "price": 0.65, "store_id": 2, "date": "2025-03-02"},
           // {"product_id": 2, "price": 0.55, "store_id": 3, "date": "2025-03-03"},
@@ -149,7 +181,7 @@ const Search: React.FC<SearchProp> = () => {
           // {"product_id": 7, "price": 4.09, "store_id": 2, "date": "2025-03-02"},
           // {"product_id": 7, "price": 3.95, "store_id": 3, "date": "2025-03-03"},
           // {"product_id": 7, "price": 4.10, "store_id": 4, "date": "2025-03-04"}
-      ]
+      //]
       
         setFilter(items)
         setFound(items);
