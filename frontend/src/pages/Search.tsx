@@ -212,6 +212,18 @@ const Search: React.FC<SearchProp> = () => {
     
     setFilter(items)
   };
+  const handleOrder = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let items = [...filter]
+
+    if (e.target.value == "Asc"){
+      items.sort((a, b) => a.price - b.price);
+    }
+    else if (e.target.value == "Desc"){
+      items.sort((a, b) => b.price - a.price);
+    }
+    
+    setFilter(items)
+  };
 
   return (
     <>
@@ -232,12 +244,18 @@ const Search: React.FC<SearchProp> = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="filter">Store:</label>
+            <label htmlFor="filter">Filter By Store:</label>
             <select id="filter" onChange={handleFilter}>
               <option value="None">None</option>
               {found.map((item) => (
                 <option value={item.groceryStore.id}>{item.groceryStore.name}, {item.groceryStore.address}</option>
               ))}
+            </select>
+            <label htmlFor="filter">Order By Price:</label>
+            <select id="filter" onChange={handleOrder}>
+              <option value="None">None</option>
+              <option value="Asc">Ascending</option>
+              <option value="Desc">Descending</option>
             </select>
           </div>
           {filter.map((item) => (
