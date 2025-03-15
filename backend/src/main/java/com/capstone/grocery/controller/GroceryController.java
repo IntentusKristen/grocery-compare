@@ -45,11 +45,6 @@ public class GroceryController {
         return ResponseEntity.ok(groceryService.findAllProductsByName(name));
     }
 
-    @GetMapping("/all-grocery-items")
-    public List<GroceryItem> getAllGroceryItems(){
-        return groceryService.findAllGroceryItems();
-    }
-
     // Grocery List Items
     @GetMapping("/grocery-list-item/{id}")
     public GroceryItem getGroceryItemById(@PathVariable Integer id) {
@@ -82,4 +77,9 @@ public class GroceryController {
         return ResponseEntity.ok(groceryService.getGroceryListPricesByStore(groceryListId, groceryStoreId));
     }
 
+    // Products
+    @GetMapping("/all-products")
+    public ResponseEntity<List<Product>> getAllProducts(){
+        return ResponseEntity.ok(groceryService.findAllProducts());
+    }
 }

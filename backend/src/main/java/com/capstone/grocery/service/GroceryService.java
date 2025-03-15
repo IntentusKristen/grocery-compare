@@ -62,6 +62,10 @@ public class GroceryService {
         return ProductsInListDto.builder().name(listName).products(products).build();
     }
 
+    public List<Product> findAllProducts(){
+        return productRepository.findAll();
+    }
+
     public List<Product> findAllProductsByName(String name) {
         return productRepository.findAllByNameIgnoreCase(name);
     }
@@ -106,10 +110,6 @@ public class GroceryService {
             }
         }
         return available;
-    }
-
-    public List<GroceryItem> findAllGroceryItems(){
-        return groceryItemRepository.findAll();
     }
 
     // Grocery List
