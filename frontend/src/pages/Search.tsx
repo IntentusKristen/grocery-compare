@@ -123,13 +123,21 @@ const Search: React.FC<SearchProp> = () => {
             </div>
           </div>
           {filter.map((item) => (
-            <div>
-              <h2>{item.product_id}</h2>
-              <h3>Store: {item.groceryStore.name}, {item.groceryStore.address}</h3>
-              <h3>Price: {item.price}</h3>
-              <h3>Information Last Updated: {item.date}</h3>
-            </div>
-          ))}
+  <div key={item.product_id} className="info-container">
+    <div className="info-item">
+      <h3>Store: {item.groceryStore.name}</h3>
+      <p>{item.groceryStore.address}</p>
+    </div>
+    <div className="info-item">
+      <h3>Price:</h3>
+      <p>${item.price}</p>
+    </div>
+    <div className="info-item">
+      <h3>Information Last Updated:</h3>
+      <p>{item.date}</p>
+    </div>
+  </div>
+))}
         </form>
       </div>
     </>
