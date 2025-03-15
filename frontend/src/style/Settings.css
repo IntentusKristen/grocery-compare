@@ -1,0 +1,88 @@
+/* Set the entire page background color */
+body {
+    background-color: #282c34; /* Dark background */
+    color: white; /* White text color */
+    margin: 0;
+    font-family: Arial, sans-serif; /* Clean font */
+  }
+  
+  /* Center the login container with slight upward shift */
+  .settings-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    height: calc(100vh - 100px); /* Reduce height to create vertical space above */
+    text-align: center; /* Center align text inside */
+    margin-top: -50px; /* Shift container upwards */
+  }
+  
+  /* Style the heading */
+  .settings-container h2 {
+    font-size: 2rem;
+    color: #50c878; /* Emerald green */
+    margin-bottom: 1rem;
+  }
+  
+  /* Style the login form box */
+  .settings-form {
+    background-color: #1c1e22; /* Slightly lighter dark background */
+    border: 2px solid #50c878; /* Emerald green border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 2rem; /* Spacing inside the box */
+    width: 300px; /* Box width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  /* Style input fields */
+  .settings-form input[type="text"],
+  .settings-form input[type="password"] {
+    width: 100%; /* Full width of input fields */
+    padding: 0.75rem;
+    margin-bottom: 1rem; /* Spacing between inputs */
+    border: 1px solid #50c878; /* Emerald green border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #282c34; /* Match navbar background */
+    color: white; /* White text */
+    font-size: 1rem;
+    outline: none; /* Remove default outline */
+  }
+  
+  .settings-form input[type="text"]:focus,
+  .settings-form input[type="password"]:focus {
+    border-color: #50c878; /* Highlight border on focus */
+    box-shadow: 0 0 5px #50c878; /* Subtle green glow effect */
+  }
+  
+  /* Style the submit button */
+  .settings-form button {
+    width: 100%; /* Full width of the button */
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #50c878; /* Emerald green */
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .settings-form button:hover {
+    background-color: #45a049; /* Slightly darker emerald green */
+  }
+  
+  /* Add a subtle footer link */
+  .settings-footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .settings-footer a {
+    color: #50c878; /* Emerald green */
+    text-decoration: none;
+  }
+  
+  .settings-footer a:hover {
+    text-decoration: underline;
+  }
+  

@@ -1,12 +1,11 @@
 import { Link as RouterLink } from "react-router-dom";
-import LogoutButton from "./LogoutButton";
 import "../style/Navbar.css";
+import LogoutButton from "./LogoutButton";
 // import {Link} from "react-scroll";
 // import { useLocation } from "react-router-dom/dist/umd/react-router-dom.development";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../style/Navbar.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth } from "../hooks/useAuth";
+import "../style/Navbar.css";
 
 const Navbar: React.FC = () => {
   const { token } = useAuth(); // Assuming useAuth provides the token
@@ -17,6 +16,9 @@ const Navbar: React.FC = () => {
         <ul className="nav-link">
           <li>
             <RouterLink to="/">Home</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/search">Search</RouterLink>
           </li>
 
           {!token && (

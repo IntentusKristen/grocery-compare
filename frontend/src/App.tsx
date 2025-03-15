@@ -2,11 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./hooks/useAuth";
-import Data from "./pages/Data";
 import GroceryData from "./pages/GroceryData";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Search from './pages/Search';
 import Settings from "./pages/Settings";
 import ShoppingList from "./pages/ShoppingList";
 import ViewShoppingLists from "./pages/ViewShoppingLists";
@@ -18,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/search" element={<Search />} />
         <Route
           path="/settings"
           element={
@@ -27,10 +28,10 @@ function App() {
           }
         />
         <Route
-          path="/data"
+          path="/search"
           element={
             <ProtectedRoute>
-              <Data />
+              <Search />
             </ProtectedRoute>
           }
         />
