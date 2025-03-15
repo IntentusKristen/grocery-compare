@@ -39,3 +39,17 @@
 .input-container button:hover {
     background-color: #ddd;
 }
+
+/* Apply flexbox to the filter container */
+.filter-store,
+.filter-price {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px; /* Add space between the dropdowns */
+}
+
+/* Align the two dropdowns side by side */
+.filtering {
+  display: flex;
+  align-items: center;
+}

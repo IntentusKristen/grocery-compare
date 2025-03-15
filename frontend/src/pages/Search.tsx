@@ -103,20 +103,24 @@ const Search: React.FC<SearchProp> = () => {
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="filter">Filter By Store:</label>
-            <select id="filter" onChange={handleFilter}>
-              <option value="None">None</option>
-              {found.map((item) => (
-                <option value={item.groceryStore.id}>{item.groceryStore.name}, {item.groceryStore.address}</option>
-              ))}
-            </select>
-            <label htmlFor="filter">Order By Price:</label>
-            <select id="filter" onChange={handleOrder}>
-              <option value="None">None</option>
-              <option value="Asc">Ascending</option>
-              <option value="Desc">Descending</option>
-            </select>
+          <div className="filtering">
+            <div className="filter-store">
+              <label htmlFor="filter-store">Filter By Store:</label>
+              <select id="filtering" onChange={handleFilter}>
+                <option value="None">None</option>
+                {found.map((item) => (
+                  <option value={item.groceryStore.id}>{item.groceryStore.name}, {item.groceryStore.address}</option>
+                ))}
+              </select>
+            </div>
+            <div className="filter-price">
+              <label htmlFor="filter-price">Order By Price:</label>
+              <select id="ordering" onChange={handleOrder}>
+                <option value="None">None</option>
+                <option value="Asc">Ascending</option>
+                <option value="Desc">Descending</option>
+              </select>
+            </div>
           </div>
           {filter.map((item) => (
             <div>
