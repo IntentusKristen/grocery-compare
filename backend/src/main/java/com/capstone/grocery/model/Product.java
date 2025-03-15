@@ -1,6 +1,7 @@
 package com.capstone.grocery.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Data

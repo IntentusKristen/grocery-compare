@@ -67,8 +67,28 @@ public class GroceryService {
     }
 
     // Grocery Item
-    public GroceryItem createGroceryItem(GroceryItem groceryItem) {
-        return groceryItemRepository.save(groceryItem);
+    public GroceryItem createGroceryItem(GroceryItemDto groceryItemDto) {
+        String productName = groceryItemDto.getName();
+
+        Product product = productRepository.findByName(productName);
+        if (product == null) {
+            product = new Product();
+            product.setName(productName);
+            product = productRepository.save(product);
+        }
+
+        GroceryStore groceryStore = groceryStoreRepository.findByName(groceryItemDto.getStore());
+        if (groceryStore == null) {
+            groceryStore = new GroceryStore();
+            groceryStore.setName(groceryItemDto.getStore());
+            groceryStore = groceryStoreRepository.save(groceryStore);
+        }
+
+         return groceryItemRepository.save(GroceryItem.builder()
+                .productId(product.getId())
+                .price(groceryItemDto.getPrice())
+                .groceryStore(groceryStore)
+                .build());
     }
 
     public GroceryItem findGroceryItemById(Integer id) {
