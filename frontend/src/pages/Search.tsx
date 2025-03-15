@@ -8,7 +8,7 @@ type GroceryItem = {
   product_id: number;
   price: number;
   groceryStore: Store;
-  date: string
+  date: string[];
 };
 type Store = {
   id: number;
@@ -43,8 +43,6 @@ const Search: React.FC<SearchProp> = () => {
           throw new Error("Failed to fetch grocery items.");
         }
         const items: GroceryItem[] = await response.json();
-
-        console.dir(items, { 'maxArrayLength': null });
 
         setFilter(items)
         setFound(items);
@@ -134,7 +132,7 @@ const Search: React.FC<SearchProp> = () => {
     </div>
     <div className="info-item">
       <h3>Information Last Updated:</h3>
-      <p>{item.date}</p>
+      <p>{item.date[0]}-{item.date[1]}-{item.date[2]}</p>
     </div>
   </div>
 ))}
