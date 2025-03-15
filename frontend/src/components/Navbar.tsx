@@ -17,9 +17,7 @@ const Navbar: React.FC = () => {
           <li>
             <RouterLink to="/">Home</RouterLink>
           </li>
-          <li>
-            <RouterLink to="/search">Search</RouterLink>
-          </li>
+
 
           {!token && (
             <>
@@ -35,10 +33,7 @@ const Navbar: React.FC = () => {
           {token && (
             <>
               <li>
-                <RouterLink to="/data">Data</RouterLink>
-              </li>
-              <li>
-                <RouterLink to="/settings">Settings</RouterLink>
+                <RouterLink to="/search">Search</RouterLink>
               </li>
               <li>
                 <RouterLink to="/shoppinglist">Create Grocery List</RouterLink>
@@ -50,6 +45,9 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <RouterLink to="/grocerydata">Grocery Data</RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/settings">Settings</RouterLink>
               </li>
               <div className="logout-container">
                 <LogoutButton />
