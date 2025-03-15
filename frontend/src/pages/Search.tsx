@@ -44,7 +44,7 @@ const Search: React.FC<SearchProp> = () => {
         }
         const items: GroceryItem[] = await response.json();
 
-        console.dir(items, {'maxArrayLength': null});
+        console.dir(items, { 'maxArrayLength': null });
 
         setFilter(items)
         setFound(items);
@@ -57,29 +57,29 @@ const Search: React.FC<SearchProp> = () => {
   };
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     let items = []
-    if (e.target.value == "None"){
+    if (e.target.value == "None") {
       items = found
     }
-    else{
-      for (let i = 0; i < found.length; i++){
-        if (found[i].groceryStore.id.toString() == e.target.value){
+    else {
+      for (let i = 0; i < found.length; i++) {
+        if (found[i].groceryStore.id.toString() == e.target.value) {
           items.push(found[i])
         }
       }
     }
-    
+
     setFilter(items)
   };
   const handleOrder = (e: React.ChangeEvent<HTMLSelectElement>) => {
     let items = [...filter]
 
-    if (e.target.value == "Asc"){
+    if (e.target.value == "Asc") {
       items.sort((a, b) => a.price - b.price);
     }
-    else if (e.target.value == "Desc"){
+    else if (e.target.value == "Desc") {
       items.sort((a, b) => b.price - a.price);
     }
-    
+
     setFilter(items)
   };
 
@@ -87,18 +87,20 @@ const Search: React.FC<SearchProp> = () => {
     <>
       <Navbar />
       <div className="search">
-        <h2>{"Search Page"}</h2>
         <form className="search-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="keyword">Keyword</label>
-            <input
-              type="text"
-              id="keyword"
-              name="keyword"
-              onChange={handleChange}
-              placeholder="Search..."
-              required
-            />
+            <div className="input-container">
+              <input
+                type="text"
+                id="keyword"
+                name="keyword"
+                onChange={handleChange}
+                placeholder="Search..."
+                required
+              />
+              <button type="submit">Search</button>
+            </div>
           </div>
 
           <div className="form-group">
@@ -124,7 +126,6 @@ const Search: React.FC<SearchProp> = () => {
               <h3>Information Last Updated: {item.date}</h3>
             </div>
           ))}
-          <button type="submit">Search</button>
         </form>
       </div>
     </>
