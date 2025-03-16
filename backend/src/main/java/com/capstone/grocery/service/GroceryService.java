@@ -88,11 +88,19 @@ public class GroceryService {
             groceryStore = groceryStoreRepository.save(groceryStore);
         }
 
-         return groceryItemRepository.save(GroceryItem.builder()
-                .productId(product.getId())
-                .price(groceryItemDto.getPrice())
-                .groceryStore(groceryStore)
-                .build());
+        GroceryItem groceryItem = groceryItemRepository.findByProductIdAndGroceryStore_Id(product.getId(), groceryStore.getId());
+        if (groceryItem == null) {
+            return groceryItemRepository.save(GroceryItem.builder()
+                    .productId(product.getId())
+                    .price(groceryItemDto.getPrice())
+                    .groceryStore(groceryStore)
+                    .build()
+            );
+        }
+
+        groceryItem.setPrice(groceryItemDto.getPrice());
+        groceryItemRepository.save(groceryItem);
+        return groceryItem;
     }
 
     public GroceryItem findGroceryItemById(Integer id) {
