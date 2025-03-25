@@ -62,13 +62,45 @@ public class GroceryService {
         return ProductsInListDto.builder().name(listName).products(products).build();
     }
 
+    public List<Product> findAllProducts(){
+        return productRepository.findAll();
+    }
+
     public List<Product> findAllProductsByName(String name) {
         return productRepository.findAllByNameIgnoreCase(name);
     }
 
     // Grocery Item
-    public GroceryItem createGroceryItem(GroceryItem groceryItem) {
-        return groceryItemRepository.save(groceryItem);
+    public GroceryItem createGroceryItem(GroceryItemDto groceryItemDto) {
+        String productName = groceryItemDto.getName();
+
+        Product product = productRepository.findByName(productName);
+        if (product == null) {
+            product = new Product();
+            product.setName(productName);
+            product = productRepository.save(product);
+        }
+
+        GroceryStore groceryStore = groceryStoreRepository.findByName(groceryItemDto.getStore());
+        if (groceryStore == null) {
+            groceryStore = new GroceryStore();
+            groceryStore.setName(groceryItemDto.getStore());
+            groceryStore = groceryStoreRepository.save(groceryStore);
+        }
+
+        GroceryItem groceryItem = groceryItemRepository.findByProductIdAndGroceryStore_Id(product.getId(), groceryStore.getId());
+        if (groceryItem == null) {
+            return groceryItemRepository.save(GroceryItem.builder()
+                    .productId(product.getId())
+                    .price(groceryItemDto.getPrice())
+                    .groceryStore(groceryStore)
+                    .build()
+            );
+        }
+
+        groceryItem.setPrice(groceryItemDto.getPrice());
+        groceryItemRepository.save(groceryItem);
+        return groceryItem;
     }
 
     public GroceryItem findGroceryItemById(Integer id) {
@@ -86,10 +118,6 @@ public class GroceryService {
             }
         }
         return available;
-    }
-
-    public List<GroceryItem> findAllGroceryItems(){
-        return groceryItemRepository.findAll();
     }
 
     // Grocery List

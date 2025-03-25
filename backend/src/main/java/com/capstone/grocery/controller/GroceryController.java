@@ -1,9 +1,6 @@
 package com.capstone.grocery.controller;
 
-import com.capstone.grocery.dto.CreateGroceryListItemDto;
-import com.capstone.grocery.dto.CreateListDto;
-import com.capstone.grocery.dto.ProductsInListDto;
-import com.capstone.grocery.dto.StoreListPricesDto;
+import com.capstone.grocery.dto.*;
 import com.capstone.grocery.model.*;
 import com.capstone.grocery.service.GroceryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +36,13 @@ public class GroceryController {
 
     // Grocery Items
     @PostMapping("/grocery-item")
-    public ResponseEntity<GroceryItem> createGroceryItem(@RequestBody GroceryItem groceryItem) {
-        return ResponseEntity.ok(groceryService.createGroceryItem(groceryItem));
+    public ResponseEntity<GroceryItem> createGroceryItem(@RequestBody GroceryItemDto groceryItemDto) {
+        return ResponseEntity.ok(groceryService.createGroceryItem(groceryItemDto));
     }
 
     @GetMapping("/products/{name}")
     public ResponseEntity<List<Product>> getProductByName(@PathVariable String name) {
         return ResponseEntity.ok(groceryService.findAllProductsByName(name));
-    }
-
-    @GetMapping("/all-grocery-items")
-    public List<GroceryItem> getAllGroceryItems(){
-        return groceryService.findAllGroceryItems();
     }
 
     // Grocery List Items
@@ -85,4 +77,9 @@ public class GroceryController {
         return ResponseEntity.ok(groceryService.getGroceryListPricesByStore(groceryListId, groceryStoreId));
     }
 
+    // Products
+    @GetMapping("/all-products")
+    public ResponseEntity<List<Product>> getAllProducts(){
+        return ResponseEntity.ok(groceryService.findAllProducts());
+    }
 }

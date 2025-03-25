@@ -29,7 +29,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(`${baseUrl}/all-grocery-items`, {
+        const response = await fetch(`${baseUrl}/all-products`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -111,7 +111,7 @@ const ShoppingList: React.FC<ShoppingListProps> = () => {
       // Save grocery list items
       const groceryListItems = groceryList.map((item) => ({
         groceryListId: groceryListResponseBody.id,
-        itemId: item.id,
+        productId: item.id,
         quantity: item.quantity,
       }));
 

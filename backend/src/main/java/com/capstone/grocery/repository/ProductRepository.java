@@ -12,4 +12,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT * FROM grocery_database g WHERE LOWER(g.name) LIKE '%' || LOWER(:name) || '%'")
     List<Product> findAllByNameIgnoreCase(@Param("name") String name);
+
+    Product findByName(String name);
 }
